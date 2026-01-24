@@ -27,8 +27,8 @@
 
 .filter-select:focus {
   outline: none;
-  border-color: #cfb53b;
-  box-shadow: 0 0 0 3px rgba(207, 181, 59, 0.1);
+  border-color: #CEB888;
+  box-shadow: 0 0 0 3px rgba(207, 181, 59, 0.1), 0 0 20px rgba(206, 184, 136, 0.2);
 }
 
 .courses-grid {
@@ -48,8 +48,8 @@
 
 .course-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  border-color: #cfb53b;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 0 20px rgba(206, 184, 136, 0.3);
+  border-color: #CEB888;
 }
 
 .course-header {
@@ -61,14 +61,15 @@
 
 .course-header h3 {
   margin: 0;
-  color: #cfb53b;
+  color: #CEB888;
   font-size: 1.2rem;
   font-weight: 700;
+  font-family: 'Outfit', sans-serif;
 }
 
 .credits {
   background: #fff9e6;
-  color: #cfb53b;
+  color: #CEB888;
   padding: 4px 10px;
   border-radius: 4px;
   font-size: 0.85rem;

@@ -18,11 +18,12 @@
   font-weight: 700;
   color: #fff;
   margin: 0;
+  font-family: 'Outfit', sans-serif;
 }
 
 .calendar-nav-btn {
   background: rgba(207, 181, 59, 0.2);
-  color: #cfb53b;
+  color: #CEB888;
   border: 1px solid rgba(207, 181, 59, 0.3);
   padding: 8px 12px;
   border-radius: 4px;
@@ -34,7 +35,8 @@
 
 .calendar-nav-btn:hover {
   background: rgba(207, 181, 59, 0.4);
-  border-color: #cfb53b;
+  border-color: #CEB888;
+  box-shadow: 0 0 20px rgba(206, 184, 136, 0.3);
 }
 
 .calendar-grid {
@@ -45,7 +47,7 @@
 
 .calendar-day-header {
   text-align: center;
-  color: #cfb53b;
+  color: #CEB888;
   font-weight: 600;
   font-size: 12px;
   text-transform: uppercase;
@@ -74,15 +76,15 @@
 
 .calendar-day.active:hover {
   background: rgba(207, 181, 59, 0.15);
-  border-color: #cfb53b;
-  color: #cfb53b;
+  border-color: #CEB888;
+  color: #CEB888;
 }
 
 .calendar-day.today {
   background: rgba(207, 181, 59, 0.25);
-  color: #cfb53b;
+  color: #CEB888;
   font-weight: 700;
-  border-color: #cfb53b;
+  border-color: #CEB888;
 }
 
 .calendar-day.empty {

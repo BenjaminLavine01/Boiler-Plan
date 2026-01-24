@@ -1,16 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LayoutDashboard, Calendar, BookOpen, Briefcase, BarChart3, Settings, LogOut, TrendingUp } from 'lucide-react';
 import './DashboardNav.css';
 
 function DashboardNav({ activeSection, onSectionChange, user, onLogout }) {
   const navigate = useNavigate();
 
   const menuItems = [
-    { id: 'overview', label: '📊 Dashboard', icon: '📊' },
-    { id: 'semester-planner', label: '📚 Semester Planner', icon: '📚' },
-    { id: 'courses', label: '📖 Course Catalog', icon: '📖' },
-    { id: 'internships', label: '🏢 Internships', icon: '🏢' },
-    { id: 'analytics', label: '📈 Analytics', icon: '📈' }
+    { id: 'overview', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'semester-planner', label: 'Semester Planner', icon: Calendar },
+    { id: 'courses', label: 'Course Catalog', icon: BookOpen },
+    { id: 'internships', label: 'Internships', icon: Briefcase },
+    { id: 'analytics', label: 'Analytics', icon: BarChart3 }
   ];
 
   return (
@@ -34,19 +35,37 @@ function DashboardNav({ activeSection, onSectionChange, user, onLogout }) {
             className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
             onClick={() => onSectionChange(item.id)}
           >
-            <span className="icon">{item.icon}</span>
+            <span className="icon"><item.icon size={20} color="white" strokeWidth={1.5} /></span>
             <span className="label">{item.label}</span>
           </button>
         ))}
       </div>
 
+      <div className="nav-features">
+        <p className="nav-features-title">Key Features</p>
+        <div className="features-mini-grid">
+          <div className="feature-mini">
+            <div className="feature-mini-icon"><Calendar size={32} color="white" strokeWidth={1.5} /></div>
+            <span className="feature-mini-label">Smart Scheduling</span>
+          </div>
+          <div className="feature-mini">
+            <div className="feature-mini-icon"><TrendingUp size={32} color="white" strokeWidth={1.5} /></div>
+            <span className="feature-mini-label">Track Progress</span>
+          </div>
+          <div className="feature-mini">
+            <div className="feature-mini-icon"><BookOpen size={32} color="white" strokeWidth={1.5} /></div>
+            <span className="feature-mini-label">Course Catalog</span>
+          </div>
+        </div>
+      </div>
+
       <div className="nav-footer">
         <button className="nav-item profile-btn" onClick={() => navigate('/profile')}>
-          <span className="icon">⚙️</span>
+          <span className="icon"><Settings size={20} color="white" strokeWidth={1.5} /></span>
           <span className="label">Settings</span>
         </button>
         <button className="nav-item logout-btn" onClick={onLogout}>
-          <span className="icon">🚪</span>
+          <span className="icon"><LogOut size={20} color="white" strokeWidth={1.5} /></span>
           <span className="label">Sign Out</span>
         </button>
       </div>

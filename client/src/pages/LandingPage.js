@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Calendar, TrendingUp, BookOpen } from 'lucide-react';
 import './LandingPage.css';
 
 function LandingPage() {
@@ -7,82 +8,80 @@ function LandingPage() {
 
   return (
     <div className="landing-page-wrapper">
-      {/* Navigation */}
-      <nav className="navbar">
-        <div className="nav-inner">
-          <div className="logo-container">
+      {/* Left Section - Dark with Features */}
+      <section className="landing-left">
+        <div className="left-content">
+          {/* Logo */}
+          <div className="logo-section">
             <span className="logo">B</span>
-            <span>BoilerPlan</span>
+            <span className="logo-text">BoilerPlan</span>
           </div>
-          <button 
-            className="nav-signin"
-            onClick={() => navigate('/login')}
-          >
-            Sign In
-          </button>
-        </div>
-      </nav>
 
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-inner">
-          <div className="hero-content">
-            <h1 className="hero-h1">
+          {/* Hero */}
+          <div className="hero-section">
+            <h1 className="hero-title">
               Master your
               <span className="gradient-text"> academic journey</span>
             </h1>
             <p className="hero-desc">
               The ultimate semester optimizer designed for Purdue students. Plan your courses, manage internships, and graduate on time with confidence.
             </p>
-            <div className="hero-cta">
-              <button 
-                className="btn-primary"
-                onClick={() => navigate('/login')}
-              >
-                Get Started
-              </button>
-              <button 
-                className="btn-secondary"
-                onClick={() => navigate('/login')}
-              >
-                Learn More
-              </button>
+          </div>
+
+          {/* Features */}
+          <div className="features-list">
+            <div className="feature-item">
+              <div className="feature-icon"><Calendar size={32} color="white" strokeWidth={1.5} /></div>
+              <div className="feature-content">
+                <h3>Smart Scheduling</h3>
+                <p>Optimize your semesters based on prerequisites and workload.</p>
+              </div>
+            </div>
+            <div className="feature-item">
+              <div className="feature-icon"><TrendingUp size={32} color="white" strokeWidth={1.5} /></div>
+              <div className="feature-content">
+                <h3>Track Progress</h3>
+                <p>Visualize your path to graduation with real-time analytics.</p>
+              </div>
+            </div>
+            <div className="feature-item">
+              <div className="feature-icon"><BookOpen size={32} color="white" strokeWidth={1.5} /></div>
+              <div className="feature-content">
+                <h3>Course Catalog</h3>
+                <p>Browse and plan courses with Purdue-specific data.</p>
+              </div>
             </div>
           </div>
-          <div className="hero-visual">
-            <div className="visual-box">📚</div>
+
+          {/* Footer */}
+          <div className="left-footer">
+            <p>© 2026 BoilerPlan. Not officially affiliated with Purdue University.</p>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="features">
-        <div className="features-inner">
-          <h2 className="section-title">Powerful Features</h2>
-          <div className="features-grid">
-            <div className="feature-card">
-              <span className="feature-icon">🎯</span>
-              <h3>Smart Scheduling</h3>
-              <p>Optimize your semesters based on prerequisites and workload.</p>
-            </div>
-            <div className="feature-card">
-              <span className="feature-icon">📊</span>
-              <h3>Track Progress</h3>
-              <p>Visualize your path to graduation with real-time analytics.</p>
-            </div>
-            <div className="feature-card">
-              <span className="feature-icon">📚</span>
-              <h3>Course Catalog</h3>
-              <p>Browse and plan courses with Purdue-specific data.</p>
-            </div>
+      {/* Right Section - Light with Login */}
+      <section className="landing-right">
+        <div className="right-content">
+          <div className="welcome-section">
+            <h2 className="welcome-title">Welcome Back</h2>
+            <p className="welcome-subtitle">Sign in to your BoilerPlan account</p>
+          </div>
+
+          <div className="login-form">
+            <button 
+              className="login-button"
+              onClick={() => navigate('/login')}
+            >
+              Continue to Login
+            </button>
+          </div>
+
+          <div className="secure-access">
+            <p className="terms-text">By logging in, you agree to our <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a>.</p>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="footer">
-        <p>© 2026 BoilerPlan. Not officially affiliated with Purdue University.</p>
-      </footer>
     </div>
   );
 }

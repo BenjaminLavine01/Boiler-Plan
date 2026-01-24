@@ -39,14 +39,14 @@
 }
 
 .btn-primary {
-  background: #cfb53b;
+  background: #CEB888;
   color: #000;
 }
 
 .btn-primary:hover {
   background: #e5d6b6;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(207, 181, 59, 0.3);
+  box-shadow: 0 4px 12px rgba(207, 181, 59, 0.3), 0 0 20px rgba(206, 184, 136, 0.3);
 }
 
 .btn-success {
@@ -99,8 +99,8 @@
 .semester-form input:focus,
 .semester-form select:focus {
   outline: none;
-  border-color: #cfb53b;
-  box-shadow: 0 0 0 3px rgba(207, 181, 59, 0.1);
+  border-color: #CEB888;
+  box-shadow: 0 0 0 3px rgba(207, 181, 59, 0.1), 0 0 20px rgba(206, 184, 136, 0.2);
 }
 
 .semesters-list {
@@ -112,20 +112,20 @@
   background: white;
   padding: 20px;
   border-radius: 8px;
-  border-left: 4px solid #cfb53b;
+  border-left: 4px solid #CEB888;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   border: 1px solid #e2e8f0;
-  border-left: 4px solid #cfb53b;
+  border-left: 4px solid #CEB888;
 }
 
 .semester-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateX(5px);
-  border-color: #cfb53b;
+  border-color: #CEB888;
 }
 
 .semester-info h3 {
@@ -142,7 +142,7 @@
 
 .course-count {
   display: inline-block;
-  background: #cfb53b;
+  background: #CEB888;
   color: #000;
   padding: 4px 12px;
   border-radius: 12px;

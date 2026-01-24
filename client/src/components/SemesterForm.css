@@ -15,6 +15,7 @@
   border: 1px solid rgba(207, 181, 59, 0.3);
   border-radius: 4px;
   font-size: 0.9rem;
+  font-family: 'DM Sans', sans-serif;
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
 }
@@ -22,8 +23,8 @@
 .semester-form input:focus,
 .semester-form select:focus {
   outline: none;
-  border-color: #cfb53b;
-  box-shadow: 0 0 0 3px rgba(207, 181, 59, 0.1);
+  border-color: #CEB888;
+  box-shadow: 0 0 0 3px rgba(207, 181, 59, 0.1), 0 0 20px rgba(206, 184, 136, 0.2);
 }
 
 @media (max-width: 768px) {

@@ -1,29 +1,32 @@
 .dashboard-nav {
   width: 280px;
-  background: #000;
+  background: #000000;
   color: #fff;
   padding: 30px 20px;
-  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 0;
   height: 100vh;
   overflow-y: auto;
-  border-right: 1px solid rgba(207, 181, 59, 0.2);
+  border-right: 1px solid rgba(207, 181, 59, 0.15);
+  font-family: 'DM Sans', sans-serif;
 }
 
 .nav-header {
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(207, 181, 59, 0.2);
+  border-bottom: 1px solid rgba(207, 181, 59, 0.15);
 }
 
 .nav-header h2 {
-  font-size: 20px;
+  font-size: 22px;
   margin: 0;
-  font-weight: 700;
+  font-weight: 800;
   color: #fff;
+  letter-spacing: -0.5px;
+  font-family: 'Outfit', sans-serif;
 }
 
 .user-info {
@@ -39,7 +42,7 @@
 .user-avatar {
   width: 50px;
   height: 50px;
-  background: #cfb53b;
+  background: #CEB888;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -47,6 +50,7 @@
   font-size: 20px;
   font-weight: 700;
   color: #000;
+  font-family: 'Outfit', sans-serif;
 }
 
 .user-details {
@@ -62,6 +66,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   color: #fff;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .user-major {
@@ -72,6 +77,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   color: rgba(255, 255, 255, 0.6);
+  font-family: 'DM Sans', sans-serif;
 }
 
 .nav-menu {
@@ -86,28 +92,31 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 15px;
+  padding: 14px 16px;
   background: transparent;
-  color: #fff;
+  color: #e0e0e0;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 14px;
+  transition: all 0.25s ease;
+  font-size: 15px;
   font-weight: 500;
   text-align: left;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .nav-item:hover {
-  background: rgba(207, 181, 59, 0.15);
-  color: #cfb53b;
+  background: rgba(207, 181, 59, 0.12);
+  color: #CEB888;
 }
 
 .nav-item.active {
-  background: rgba(207, 181, 59, 0.1);
-  color: #cfb53b;
+  background: rgba(207, 181, 59, 0.15);
+  color: #CEB888;
   font-weight: 600;
-  border-left: 3px solid #cfb53b;
+  border-left: 3px solid #CEB888;
+  padding-left: 13px;
+  box-shadow: 0 0 20px rgba(206, 184, 136, 0.3);
 }
 
 .icon {
@@ -132,22 +141,91 @@
 
 .profile-btn {
   color: #fff;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .profile-btn:hover {
   background: rgba(207, 181, 59, 0.15);
-  color: #cfb53b;
+  color: #CEB888;
 }
 
 .logout-btn {
-  background: #cfb53b !important;
+  background: #CEB888 !important;
   color: #000 !important;
   font-weight: 600;
+  font-family: 'Outfit', sans-serif;
 }
 
 .logout-btn:hover {
   background: #fff !important;
   color: #000 !important;
+}
+
+.nav-features {
+  padding: 20px;
+  border-top: 1px solid rgba(207, 181, 59, 0.2);
+}
+
+.nav-features-title {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 15px;
+  padding: 0 5px;
+}
+
+.features-mini-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feature-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: rgba(207, 181, 59, 0.05);
+  border: 1px solid rgba(207, 181, 59, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.feature-mini:hover {
+  background: rgba(207, 181, 59, 0.1);
+  border-color: rgba(207, 181, 59, 0.4);
+  box-shadow: 0 0 20px rgba(206, 184, 136, 0.3);
+  transform: translateY(-2px);
+}
+
+.feature-mini-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(207, 181, 59, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(206, 184, 136, 0.2);
+  transition: all 0.3s ease;
+}
+
+.feature-mini:hover .feature-mini-icon {
+  box-shadow: 0 0 25px rgba(206, 184, 136, 0.4), 0 0 40px rgba(206, 184, 136, 0.15);
+  background: rgba(207, 181, 59, 0.2);
+  transform: scale(1.08);
+}
+
+.feature-mini-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
 }
 
 /* Scrollbar */
