@@ -8,6 +8,7 @@
     "server": "cd server && npm run dev",
     "build": "cd client && npm run build"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "mongodb": "^7.0.0"
+  }
 }

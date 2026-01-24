@@ -19,12 +19,12 @@
   align-items: center;
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid rgba(207, 181, 59, 0.2);
 }
 
 .section-header h1 {
   margin: 0;
-  color: #2d3748;
+  color: #fff;
   font-size: 2rem;
 }
 
@@ -39,14 +39,14 @@
 }
 
 .btn-primary {
-  background: #667eea;
-  color: white;
+  background: #cfb53b;
+  color: #000;
 }
 
 .btn-primary:hover {
-  background: #764ba2;
+  background: #e5d6b6;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(207, 181, 59, 0.3);
 }
 
 .btn-success {
@@ -80,25 +80,27 @@
   gap: 15px;
   margin-bottom: 30px;
   padding: 20px;
-  background: #f7fafc;
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(207, 181, 59, 0.2);
 }
 
 .semester-form input,
 .semester-form select {
   padding: 10px;
-  border: 1px solid #cbd5e0;
+  border: 1px solid rgba(207, 181, 59, 0.3);
   border-radius: 6px;
   font-size: 0.95rem;
   font-family: inherit;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
 }
 
 .semester-form input:focus,
 .semester-form select:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #cfb53b;
+  box-shadow: 0 0 0 3px rgba(207, 181, 59, 0.1);
 }
 
 .semesters-list {
@@ -107,38 +109,41 @@
 }
 
 .semester-item {
-  background: white;
+  background: rgba(255, 255, 255, 0.03);
   padding: 20px;
   border-radius: 8px;
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #cfb53b;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
   transition: all 0.3s ease;
+  border: 1px solid rgba(207, 181, 59, 0.2);
+  border-left: 4px solid #cfb53b;
 }
 
 .semester-item:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   transform: translateX(5px);
+  border-color: #cfb53b;
 }
 
 .semester-info h3 {
   margin: 0 0 5px 0;
-  color: #2d3748;
+  color: #fff;
   font-size: 1.2rem;
 }
 
 .semester-info p {
   margin: 0 0 8px 0;
-  color: #718096;
+  color: rgba(255, 255, 255, 0.6);
   font-size: 0.95rem;
 }
 
 .course-count {
   display: inline-block;
-  background: #667eea;
-  color: white;
+  background: #cfb53b;
+  color: #000;
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 0.85rem;
@@ -148,10 +153,10 @@
 .empty-state {
   text-align: center;
   padding: 40px;
-  color: #a0aec0;
-  background: white;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
-  border: 2px dashed #cbd5e0;
+  border: 2px dashed rgba(207, 181, 59, 0.3);
 }
 
 @media (max-width: 768px) {

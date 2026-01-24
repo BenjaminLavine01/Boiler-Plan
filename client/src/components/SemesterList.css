@@ -9,40 +9,41 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  background: #f7fafc;
-  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(207, 181, 59, 0.2);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .semester-card:hover {
-  background: #edf2f7;
+  background: rgba(255, 255, 255, 0.05);
   transform: translateX(5px);
+  border-color: #cfb53b;
 }
 
 .semester-card.active {
-  background: #e6f3ff;
-  border-color: #667eea;
-  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+  background: rgba(207, 181, 59, 0.1);
+  border-color: #cfb53b;
+  box-shadow: 0 2px 4px rgba(207, 181, 59, 0.2);
 }
 
 .semester-info h3 {
   margin: 0 0 5px 0;
-  color: #2d3748;
+  color: #fff;
   font-size: 1rem;
 }
 
 .semester-info p {
   margin: 0 0 5px 0;
-  color: #718096;
+  color: rgba(255, 255, 255, 0.6);
   font-size: 0.9rem;
 }
 
 .course-count {
   display: inline-block;
-  background: #667eea;
-  color: white;
+  background: #cfb53b;
+  color: #000;
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 0.8rem;
@@ -51,7 +52,7 @@
 
 .empty-state {
   text-align: center;
-  color: #a0aec0;
+  color: rgba(255, 255, 255, 0.5);
   padding: 20px;
   font-style: italic;
 }
