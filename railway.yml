@@ -1,0 +1,26 @@
+name: semester-planner
+services:
+  - type: mongodb
+    name: mongodb
+    plan: free
+  
+  - type: web
+    name: server
+    plan: free
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+    
+  - type: web
+    name: client
+    plan: free
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: build

@@ -1,0 +1,57 @@
+.semester-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.semester-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f7fafc;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.semester-card:hover {
+  background: #edf2f7;
+  transform: translateX(5px);
+}
+
+.semester-card.active {
+  background: #e6f3ff;
+  border-color: #667eea;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+}
+
+.semester-info h3 {
+  margin: 0 0 5px 0;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+.semester-info p {
+  margin: 0 0 5px 0;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.course-count {
+  display: inline-block;
+  background: #667eea;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.empty-state {
+  text-align: center;
+  color: #a0aec0;
+  padding: 20px;
+  font-style: italic;
+}
