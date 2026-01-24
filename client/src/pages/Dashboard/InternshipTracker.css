@@ -1,0 +1,118 @@
+.internship-tracker {
+  animation: fadeIn 0.3s ease;
+}
+
+.internship-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f7fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.internship-form input,
+.internship-form select {
+  padding: 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.internship-form input:focus,
+.internship-form select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.internships-list {
+  display: grid;
+  gap: 15px;
+}
+
+.internship-item {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.internship-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateX(5px);
+}
+
+.internship-info h3 {
+  margin: 0 0 5px 0;
+  color: #2d3748;
+  font-size: 1.2rem;
+}
+
+.position {
+  margin: 0 0 10px 0;
+  color: #667eea;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.internship-details {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  color: #718096;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: white;
+}
+
+.status.applied {
+  background: #4299e1;
+}
+
+.status.pending {
+  background: #ed8936;
+}
+
+.status.accepted {
+  background: #48bb78;
+}
+
+.status.completed {
+  background: #9f7aea;
+}
+
+.status.rejected {
+  background: #f56565;
+}
+
+@media (max-width: 768px) {
+  .internship-form {
+    grid-template-columns: 1fr;
+  }
+
+  .internship-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .internship-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

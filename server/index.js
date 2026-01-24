@@ -29,9 +29,15 @@ mongoose.connect(mongoURI, {
 // Routes
 const semesterRoutes = require('./routes/semesters');
 const courseRoutes = require('./routes/courses');
+const authRoutes = require('./routes/auth');
+const internshipRoutes = require('./routes/internships');
+const purdueCoursesRoutes = require('./routes/purdue-courses');
 
 app.use('/api/semesters', semesterRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/internships', internshipRoutes);
+app.use('/api/purdue-courses', purdueCoursesRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
