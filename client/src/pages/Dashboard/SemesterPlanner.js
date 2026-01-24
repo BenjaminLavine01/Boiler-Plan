@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Calendar from '../../components/Calendar';
 import './SemesterPlanner.css';
 
 function SemesterPlanner({ user }) {
@@ -109,6 +110,8 @@ function SemesterPlanner({ user }) {
           ))
         )}
       </div>
+
+      <Calendar />
     </div>
   );
 }

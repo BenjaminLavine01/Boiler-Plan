@@ -236,12 +236,13 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 80px 20px;
+  background: #000;
 }
 
 .why-us h2 {
   text-align: center;
   font-size: 36px;
-  color: #000;
+  color: #fff;
   margin-bottom: 60px;
   font-weight: 700;
 }
@@ -254,13 +255,13 @@
 
 .why-item h3 {
   font-size: 18px;
-  color: #000;
+  color: #cfb53b;
   margin-bottom: 10px;
   font-weight: 600;
 }
 
 .why-item p {
-  color: #666;
+  color: rgba(255, 255, 255, 0.6);
   line-height: 1.6;
   font-size: 14px;
 }

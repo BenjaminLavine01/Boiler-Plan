@@ -5,24 +5,24 @@
 .catalog-filters {
   margin-bottom: 30px;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.03);
+  background: white;
   border-radius: 8px;
   display: flex;
   gap: 15px;
   align-items: center;
-  border: 1px solid rgba(207, 181, 59, 0.2);
+  border: 1px solid #e2e8f0;
 }
 
 .filter-select {
   padding: 10px 15px;
-  border: 1px solid rgba(207, 181, 59, 0.3);
+  border: 1px solid #cbd5e0;
   border-radius: 6px;
   font-size: 0.95rem;
   font-family: inherit;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  background: white;
+  color: #2d3748;
 }
 
 .filter-select:focus {
@@ -38,17 +38,17 @@
 }
 
 .course-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: white;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
-  border: 1px solid rgba(207, 181, 59, 0.2);
+  border: 1px solid #e2e8f0;
 }
 
 .course-card:hover {
   transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   border-color: #cfb53b;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .credits {
-  background: rgba(207, 181, 59, 0.2);
+  background: #fff9e6;
   color: #cfb53b;
   padding: 4px 10px;
   border-radius: 4px;
@@ -77,13 +77,13 @@
 
 .course-card h4 {
   margin: 10px 0 5px 0;
-  color: #fff;
+  color: #2d3748;
   font-size: 1.05rem;
 }
 
 .department {
   margin: 0 0 10px 0;
-  color: rgba(255, 255, 255, 0.5);
+  color: #a0aec0;
   font-size: 0.9rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -92,7 +92,7 @@
 
 .description {
   margin: 10px 0;
-  color: rgba(255, 255, 255, 0.6);
+  color: #718096;
   font-size: 0.9rem;
   line-height: 1.5;
 }
