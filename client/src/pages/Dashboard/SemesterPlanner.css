@@ -19,12 +19,12 @@
   align-items: center;
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 2px solid rgba(207, 181, 59, 0.2);
+  border-bottom: 2px solid #e2e8f0;
 }
 
 .section-header h1 {
   margin: 0;
-  color: #fff;
+  color: #2d3748;
   font-size: 2rem;
 }
 
@@ -80,20 +80,20 @@
   gap: 15px;
   margin-bottom: 30px;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.03);
+  background: white;
   border-radius: 8px;
-  border: 1px solid rgba(207, 181, 59, 0.2);
+  border: 1px solid #e2e8f0;
 }
 
 .semester-form input,
 .semester-form select {
   padding: 10px;
-  border: 1px solid rgba(207, 181, 59, 0.3);
+  border: 1px solid #cbd5e0;
   border-radius: 6px;
   font-size: 0.95rem;
   font-family: inherit;
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  background: white;
+  color: #2d3748;
 }
 
 .semester-form input:focus,
@@ -109,34 +109,34 @@
 }
 
 .semester-item {
-  background: rgba(255, 255, 255, 0.03);
+  background: white;
   padding: 20px;
   border-radius: 8px;
   border-left: 4px solid #cfb53b;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
-  border: 1px solid rgba(207, 181, 59, 0.2);
+  border: 1px solid #e2e8f0;
   border-left: 4px solid #cfb53b;
 }
 
 .semester-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateX(5px);
   border-color: #cfb53b;
 }
 
 .semester-info h3 {
   margin: 0 0 5px 0;
-  color: #fff;
+  color: #2d3748;
   font-size: 1.2rem;
 }
 
 .semester-info p {
   margin: 0 0 8px 0;
-  color: rgba(255, 255, 255, 0.6);
+  color: #718096;
   font-size: 0.95rem;
 }
 
@@ -153,10 +153,10 @@
 .empty-state {
   text-align: center;
   padding: 40px;
-  color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.03);
+  color: #a0aec0;
+  background: white;
   border-radius: 8px;
-  border: 2px dashed rgba(207, 181, 59, 0.3);
+  border: 2px dashed #cbd5e0;
 }
 
 @media (max-width: 768px) {
