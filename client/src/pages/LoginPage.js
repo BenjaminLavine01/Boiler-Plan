@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import './LoginPage.css';
 
@@ -44,7 +44,7 @@ function LoginPage() {
     setError('');
 
     try {
-      const response = await axios.post('/api/auth/login', loginData);
+      const response = await api.post('/api/auth/login', loginData);
       login(response.data);
       navigate('/dashboard');
     } catch (err) {
@@ -66,7 +66,7 @@ function LoginPage() {
     }
 
     try {
-      const response = await axios.post('/api/auth/register', {
+      const response = await api.post('/api/auth/register', {
         username: registerData.username,
         email: registerData.email,
         password: registerData.password,
