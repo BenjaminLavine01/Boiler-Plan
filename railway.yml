@@ -8,8 +8,8 @@ services:
     name: server
     plan: free
     runtime: node
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
     envVars:
       - key: MONGODB_URI
         sync: false
@@ -22,5 +22,5 @@ services:
     name: client
     plan: free
     runtime: static
-    buildCommand: npm install && npm run build
-    staticPublishPath: build
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: client/build
