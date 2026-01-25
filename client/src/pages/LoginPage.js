@@ -12,7 +12,7 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const [loginData, setLoginData] = useState({
-    username: '',
+    email: '',
     password: ''
   });
 
@@ -67,12 +67,10 @@ function LoginPage() {
 
     try {
       const response = await api.post('/api/auth/register', {
-        username: registerData.username,
         email: registerData.email,
         password: registerData.password,
-        name: registerData.name,
-        major: registerData.major,
-        graduationYear: parseInt(registerData.graduationYear)
+        firstName: registerData.name.split(' ')[0] || registerData.name,
+        lastName: registerData.name.split(' ').slice(1).join(' ') || ''
       });
       login(response.data);
       navigate('/dashboard');
