@@ -17,13 +17,10 @@ function LoginPage() {
   });
 
   const [registerData, setRegisterData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: '',
-    confirmPassword: '',
-    name: '',
-    major: 'Computer Science',
-    graduationYear: new Date().getFullYear() + 4
+    confirmPassword: ''
   });
 
   const handleLoginChange = (e) => {
@@ -110,12 +107,12 @@ function LoginPage() {
         {activeTab === 'login' && (
           <form onSubmit={handleLogin} className="auth-form">
             <div className="form-group">
-              <label>Username</label>
+              <label>Email</label>
               <input
-                type="text"
-                name="username"
-                placeholder="Enter your username"
-                value={loginData.username}
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                value={loginData.email}
                 onChange={handleLoginChange}
                 required
               />
@@ -160,18 +157,6 @@ function LoginPage() {
             </div>
 
             <div className="form-group">
-              <label>Username</label>
-              <input
-                type="text"
-                name="username"
-                placeholder="Choose a username"
-                value={registerData.username}
-                onChange={handleRegisterChange}
-                required
-              />
-            </div>
-
-            <div className="form-group">
               <label>Email</label>
               <input
                 type="email"
@@ -181,35 +166,6 @@ function LoginPage() {
                 onChange={handleRegisterChange}
                 required
               />
-            </div>
-
-            <div className="form-group">
-              <label>Major</label>
-              <select
-                name="major"
-                value={registerData.major}
-                onChange={handleRegisterChange}
-              >
-                <option>Computer Science</option>
-                <option>Electrical Engineering</option>
-                <option>Mechanical Engineering</option>
-                <option>Chemical Engineering</option>
-                <option>Civil Engineering</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Expected Graduation Year</label>
-              <select
-                name="graduationYear"
-                value={registerData.graduationYear}
-                onChange={handleRegisterChange}
-              >
-                {[2025, 2026, 2027, 2028, 2029, 2030].map(year => (
-                  <option key={year} value={year}>{year}</option>
-                ))}
-              </select>
             </div>
 
             <div className="form-group">
