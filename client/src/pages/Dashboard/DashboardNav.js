@@ -21,10 +21,10 @@ function DashboardNav({ activeSection, onSectionChange, user, onLogout }) {
       </div>
 
       <div className="user-info">
-        <div className="user-avatar">{user.name.charAt(0).toUpperCase()}</div>
+        <div className="user-avatar">{(user.firstName || user.name || 'U').charAt(0).toUpperCase()}</div>
         <div className="user-details">
-          <p className="user-name">{user.name}</p>
-          <p className="user-major">{user.major}</p>
+          <p className="user-name">{user.firstName || user.name || 'User'}</p>
+          <p className="user-major">{user.major || user.email}</p>
         </div>
       </div>
 
