@@ -40,8 +40,8 @@ router.post('/register', async (req, res) => {
     res.status(201).json({
       id: user.id,
       email: user.email,
-      firstName: user.firstname,
-      lastName: user.lastname,
+      firstName: user.firstName,
+      lastName: user.lastName,
       message: 'User registered successfully'
     });
   } catch (error) {
@@ -85,8 +85,8 @@ router.post('/login', async (req, res) => {
     res.json({
       id: user.id,
       email: user.email,
-      firstName: user.firstname,
-      lastName: user.lastname,
+      firstName: user.firstName,
+      lastName: user.lastName,
       semesters: semestersResult.rows,
       message: 'Login successful'
     });
@@ -125,40 +125,13 @@ router.get('/:id', async (req, res) => {
     res.json({
       id: user.id,
       email: user.email,
-      firstName: user.firstname,
-      lastName: user.lastname,
+      firstName: user.firstName,
+      lastName: user.lastName,
       semesters: semestersResult.rows,
       internships: internshipsResult.rows
     });
   } catch (error) {
     console.error('Get profile error:', error);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-module.exports = router;
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Update user profile
-router.put('/:id', async (req, res) => {
-  try {
-    const { name, major, graduationYear, profilePicture } = req.body;
-    const user = await User.findById(req.params.id);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    if (name) user.name = name;
-    if (major) user.major = major;
-    if (graduationYear) user.graduationYear = graduationYear;
-    if (profilePicture) user.profilePicture = profilePicture;
-
-    const updatedUser = await user.save();
-    res.json(updatedUser);
-  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
