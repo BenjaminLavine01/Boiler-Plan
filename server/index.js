@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-require('dotenv').config();
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env.local') });
 
 const app = express();
 
