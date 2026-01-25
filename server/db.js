@@ -8,6 +8,8 @@ const pool = new Pool({
 // Initialize database tables
 async function initializeDatabase() {
   try {
+    console.log('🔄 Initializing database tables...');
+    
     // Users table
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
@@ -24,12 +26,13 @@ async function initializeDatabase() {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS semesters (
         id SERIAL PRIMARY KEY,
-        userId INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        userId INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         term VARCHAR(50) NOT NULL,
         year INTEGER NOT NULL,
         startDate DATE,
         endDate DATE,
-        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(userId, term, year)
       );
     `);
 
@@ -50,12 +53,13 @@ async function initializeDatabase() {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS user_schedule (
         id SERIAL PRIMARY KEY,
-        userId INTEGER REFERENCES users(id) ON DELETE CASCADE,
-        courseId INTEGER REFERENCES courses(id),
-        semesterId INTEGER REFERENCES semesters(id) ON DELETE CASCADE,
+        userId INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        courseId INTEGER NOT NULL REFERENCES courses(id),
+        semesterId INTEGER NOT NULL REFERENCES semesters(id) ON DELETE CASCADE,
         status VARCHAR(50) DEFAULT 'planned',
         grade VARCHAR(2),
-        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(userId, courseId, semesterId)
       );
     `);
 
@@ -63,7 +67,7 @@ async function initializeDatabase() {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS internships (
         id SERIAL PRIMARY KEY,
-        userId INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        userId INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         company VARCHAR(200) NOT NULL,
         role VARCHAR(200) NOT NULL,
         startDate DATE,
@@ -76,13 +80,9 @@ async function initializeDatabase() {
     console.log('✅ Database tables initialized successfully');
   } catch (error) {
     console.error('❌ Error initializing database:', error);
-  } finally {
-    await pool.end();
+    throw error;
   }
 }
 
-if (require.main === module) {
-  initializeDatabase();
-}
-
+// Export pool and init function
 module.exports = { pool, initializeDatabase };
