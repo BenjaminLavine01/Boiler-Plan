@@ -1,6 +1,6 @@
-# Semester Planner - MongoDB Edition
+# BoilerPlan - PostgreSQL Edition
 
-A full-stack semester planning application built with React, Express.js, and MongoDB. Plan your academic courses, track your grades, and calculate your GPA with ease.
+A full-stack semester planning application built with React, Express.js, and PostgreSQL. Plan your academic courses, track your grades, and calculate your GPA with ease.
 
 ## Features
 
@@ -21,7 +21,7 @@ A full-stack semester planning application built with React, Express.js, and Mon
 ### Backend
 - Node.js
 - Express.js
-- MongoDB with Mongoose
+- PostgreSQL database
 - CORS support
 
 ## Project Structure

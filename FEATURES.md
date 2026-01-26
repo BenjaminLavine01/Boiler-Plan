@@ -391,15 +391,15 @@
    - Add courses to semesters
    - Track internships
    - View progress analytics
-6. All data syncs with backend MongoDB
+6. All data syncs with backend Postgre
 7. Sign out → Returns to landing page
 
 ---
 
 ## 📝 Notes
 
-- Authentication uses MongoDB for user storage
-- All data persists in MongoDB Atlas
+- Authentication uses PostgreSQL for user storage
+- All data persists in PostgreSQL database
 - Frontend uses localStorage for session management
 - API endpoints prefixed with `/api/`
 - CORS enabled for frontend-backend communication

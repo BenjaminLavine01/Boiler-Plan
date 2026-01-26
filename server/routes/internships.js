@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const Internship = require('../models/Internship');
-const User = require('../models/User');
+const { pool } = require('../db');
 
 // Get all internships for a user
 router.get('/user/:userId', async (req, res) => {
   try {
-    const internships = await Internship.find({ user: req.params.userId });
-    res.json(internships);
+    const result = await pool.query(
+      'SELECT id, company, role, startDate, endDate, description FROM internships WHERE userId = $1 ORDER BY startDate DESC',
+      [req.params.userId]
+    );
+    res.json(result.rows);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -16,11 +18,14 @@ router.get('/user/:userId', async (req, res) => {
 // Get a single internship
 router.get('/:id', async (req, res) => {
   try {
-    const internship = await Internship.findById(req.params.id);
-    if (!internship) {
+    const result = await pool.query(
+      'SELECT id, userId, company, role, startDate, endDate, description FROM internships WHERE id = $1',
+      [req.params.id]
+    );
+    if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Internship not found' });
     }
-    res.json(internship);
+    res.json(result.rows[0]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -28,30 +33,18 @@ router.get('/:id', async (req, res) => {
 
 // Create a new internship
 router.post('/', async (req, res) => {
-  const internship = new Internship({
-    company: req.body.company,
-    position: req.body.position,
-    semester: req.body.semester,
-    year: req.body.year,
-    status: req.body.status || 'Applied',
-    location: req.body.location,
-    stipend: req.body.stipend || 0,
-    description: req.body.description,
-    user: req.body.userId
-  });
-
   try {
-    const newInternship = await internship.save();
-
-    // Add to user's internships
-    if (req.body.userId) {
-      await User.findByIdAndUpdate(
-        req.body.userId,
-        { $push: { internships: newInternship._id } }
-      );
+    const { userId, company, role, startDate, endDate, description } = req.body;
+    if (!userId || !company || !role) {
+      return res.status(400).json({ message: 'userId, company, and role required' });
     }
 
-    res.status(201).json(newInternship);
+    const result = await pool.query(
+      'INSERT INTO internships (userId, company, role, startDate, endDate, description) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [userId, company, role, startDate || null, endDate || null, description || null]
+    );
+
+    res.status(201).json(result.rows[0]);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -60,22 +53,16 @@ router.post('/', async (req, res) => {
 // Update an internship
 router.put('/:id', async (req, res) => {
   try {
-    const internship = await Internship.findById(req.params.id);
-    if (!internship) {
+    const { company, role, startDate, endDate, description } = req.body;
+    const result = await pool.query(
+      'UPDATE internships SET company = COALESCE($1, company), role = COALESCE($2, role), startDate = COALESCE($3, startDate), endDate = COALESCE($4, endDate), description = COALESCE($5, description) WHERE id = $6 RETURNING *',
+      [company, role, startDate, endDate, description, req.params.id]
+    );
+
+    if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Internship not found' });
     }
-
-    if (req.body.company) internship.company = req.body.company;
-    if (req.body.position) internship.position = req.body.position;
-    if (req.body.semester) internship.semester = req.body.semester;
-    if (req.body.year) internship.year = req.body.year;
-    if (req.body.status) internship.status = req.body.status;
-    if (req.body.location) internship.location = req.body.location;
-    if (req.body.stipend !== undefined) internship.stipend = req.body.stipend;
-    if (req.body.description) internship.description = req.body.description;
-
-    const updatedInternship = await internship.save();
-    res.json(updatedInternship);
+    res.json(result.rows[0]);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -84,21 +71,11 @@ router.put('/:id', async (req, res) => {
 // Delete an internship
 router.delete('/:id', async (req, res) => {
   try {
-    const internship = await Internship.findById(req.params.id);
-    if (!internship) {
+    const result = await pool.query('DELETE FROM internships WHERE id = $1 RETURNING id', [req.params.id]);
+    if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Internship not found' });
     }
-
-    // Remove from user's internships
-    if (internship.user) {
-      await User.findByIdAndUpdate(
-        internship.user,
-        { $pull: { internships: req.params.id } }
-      );
-    }
-
-    await Internship.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Internship deleted successfully' });
+    res.json({ message: 'Internship deleted successfully', id: result.rows[0].id });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

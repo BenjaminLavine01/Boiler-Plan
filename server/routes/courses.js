@@ -1,13 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const Course = require('../models/Course');
-const Semester = require('../models/Semester');
+const { pool } = require('../db');
 
-// Get all courses
+// Get all courses for a user
 router.get('/', async (req, res) => {
   try {
-    const courses = await Course.find().populate('semester');
-    res.json(courses);
+    const { userId } = req.query;
+    if (!userId) {
+      return res.status(400).json({ message: 'userId required' });
+    }
+
+    const result = await pool.query(
+      `SELECT c.id, c.code, c.title, c.credits, c.description, c.prerequisites,
+              us.grade, us.status
+       FROM courses c
+       LEFT JOIN user_schedule us ON c.id = us.courseId
+       WHERE us.userId = $1
+       ORDER BY c.title`,
+      [userId]
+    );
+    res.json(result.rows);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -16,8 +28,15 @@ router.get('/', async (req, res) => {
 // Get courses by semester
 router.get('/semester/:semesterId', async (req, res) => {
   try {
-    const courses = await Course.find({ semester: req.params.semesterId });
-    res.json(courses);
+    const result = await pool.query(
+      `SELECT c.id, c.code, c.title, c.credits, c.description, us.grade, us.status
+       FROM courses c
+       JOIN user_schedule us ON c.id = us.courseId
+       WHERE us.semesterId = $1
+       ORDER BY c.title`,
+      [req.params.semesterId]
+    );
+    res.json(result.rows);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -26,85 +45,80 @@ router.get('/semester/:semesterId', async (req, res) => {
 // Get a single course
 router.get('/:id', async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id).populate('semester');
-    if (!course) {
+    const result = await pool.query(
+      'SELECT id, code, title, credits, description, prerequisites FROM courses WHERE id = $1',
+      [req.params.id]
+    );
+    if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Course not found' });
     }
-    res.json(course);
+    res.json(result.rows[0]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Create a new course
+// Create or add course to user schedule
 router.post('/', async (req, res) => {
-  const course = new Course({
-    name: req.body.name,
-    courseCode: req.body.courseCode,
-    credits: req.body.credits,
-    grade: req.body.grade || 'Not Graded',
-    gpa: req.body.gpa || 0,
-    semester: req.body.semester,
-    description: req.body.description
-  });
-
   try {
-    const newCourse = await course.save();
-    
-    // Add course to semester
-    if (req.body.semester) {
-      await Semester.findByIdAndUpdate(
-        req.body.semester,
-        { $push: { courses: newCourse._id } }
-      );
+    const { userId, code, title, credits, semesterId, grade, status } = req.body;
+    if (!userId || !code || !title || !semesterId) {
+      return res.status(400).json({ message: 'userId, code, title, and semesterId required' });
     }
 
-    res.status(201).json(newCourse);
+    // First, ensure course exists
+    let courseResult = await pool.query('SELECT id FROM courses WHERE code = $1', [code]);
+    
+    let courseId;
+    if (courseResult.rows.length === 0) {
+      // Create course
+      const createResult = await pool.query(
+        'INSERT INTO courses (code, title, credits) VALUES ($1, $2, $3) RETURNING id',
+        [code, title, credits]
+      );
+      courseId = createResult.rows[0].id;
+    } else {
+      courseId = courseResult.rows[0].id;
+    }
+
+    // Add to user schedule
+    const scheduleResult = await pool.query(
+      'INSERT INTO user_schedule (userId, courseId, semesterId, grade, status) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [userId, courseId, semesterId, grade || null, status || 'planned']
+    );
+
+    res.status(201).json(scheduleResult.rows[0]);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// Update a course
+// Update a course enrollment
 router.put('/:id', async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id);
-    if (!course) {
-      return res.status(404).json({ message: 'Course not found' });
+    const { grade, status } = req.body;
+    const result = await pool.query(
+      'UPDATE user_schedule SET grade = COALESCE($1, grade), status = COALESCE($2, status) WHERE id = $3 RETURNING *',
+      [grade, status, req.params.id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Enrollment not found' });
     }
-
-    if (req.body.name) course.name = req.body.name;
-    if (req.body.courseCode) course.courseCode = req.body.courseCode;
-    if (req.body.credits) course.credits = req.body.credits;
-    if (req.body.grade) course.grade = req.body.grade;
-    if (req.body.gpa !== undefined) course.gpa = req.body.gpa;
-    if (req.body.description) course.description = req.body.description;
-
-    const updatedCourse = await course.save();
-    res.json(updatedCourse);
+    res.json(result.rows[0]);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// Delete a course
+// Delete a course enrollment
 router.delete('/:id', async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id);
-    if (!course) {
-      return res.status(404).json({ message: 'Course not found' });
+    const result = await pool.query('DELETE FROM user_schedule WHERE id = $1 RETURNING id', [req.params.id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Enrollment not found' });
     }
-
-    // Remove course from semester
-    if (course.semester) {
-      await Semester.findByIdAndUpdate(
-        course.semester,
-        { $pull: { courses: req.params.id } }
-      );
-    }
-
-    await Course.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Course deleted successfully' });
+    res.json({ message: 'Course removed successfully', id: result.rows[0].id });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

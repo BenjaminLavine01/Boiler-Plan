@@ -1,19 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const PurdueCourse = require('../models/PurdueCourse');
+const { pool } = require('../db');
 
 // Get all Purdue courses
 router.get('/', async (req, res) => {
   try {
-    const { department, difficulty, workload } = req.query;
-    let query = {};
-
-    if (department) query.department = department;
-    if (difficulty) query.difficulty = parseInt(difficulty);
-    if (workload) query.workload = workload;
-
-    const courses = await PurdueCourse.find(query);
-    res.json(courses);
+    const result = await pool.query(
+      'SELECT id, code, title, credits, description, prerequisites FROM courses ORDER BY code'
+    );
+    res.json(result.rows);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -22,46 +17,30 @@ router.get('/', async (req, res) => {
 // Get course by code
 router.get('/:code', async (req, res) => {
   try {
-    const course = await PurdueCourse.findOne({ courseCode: req.params.code });
-    if (!course) {
+    const result = await pool.query(
+      'SELECT id, code, title, credits, description, prerequisites FROM courses WHERE code = $1',
+      [req.params.code]
+    );
+    if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Course not found' });
     }
-    res.json(course);
+    res.json(result.rows[0]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Get courses by department
-router.get('/department/:dept', async (req, res) => {
+// Search courses
+router.get('/search/:keyword', async (req, res) => {
   try {
-    const courses = await PurdueCourse.find({ department: req.params.dept });
-    res.json(courses);
+    const keyword = `%${req.params.keyword}%`;
+    const result = await pool.query(
+      'SELECT id, code, title, credits, description FROM courses WHERE code ILIKE $1 OR title ILIKE $1 ORDER BY code',
+      [keyword]
+    );
+    res.json(result.rows);
   } catch (error) {
     res.status(500).json({ message: error.message });
-  }
-});
-
-// Create a new course (admin only)
-router.post('/', async (req, res) => {
-  const course = new PurdueCourse({
-    courseCode: req.body.courseCode,
-    name: req.body.name,
-    credits: req.body.credits,
-    department: req.body.department,
-    description: req.body.description,
-    prerequisites: req.body.prerequisites || [],
-    corequisites: req.body.corequisites || [],
-    difficulty: req.body.difficulty || 3,
-    workload: req.body.workload || 'Moderate',
-    isCoreClass: req.body.isCoreClass || false
-  });
-
-  try {
-    const newCourse = await course.save();
-    res.status(201).json(newCourse);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
   }
 });
 
