@@ -3,7 +3,7 @@ const { Pool } = pkg;
 
 export const pool = new Pool({
   connectionString: process.env.postgresql//postgres:KDkQwRAtaJPQyqsUahaLWMWZbIZcqnYP@postgres.railway.internal:5432/railway,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
+   ssl: { rejectUnauthorized: false }
 });
 
 const { Pool } = require('pg');
