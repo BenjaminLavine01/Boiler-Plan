@@ -10,5 +10,9 @@
     "build": "cd client && npm install && npm run build",
     "build:full": "npm install && cd client && npm install && npm run build && cd ../server && npm install"
   },
-  "dependencies": {}
+  "dependencies": {
+    "add": "^2.0.6",
+    "express": "^5.2.1",
+    "git": "^0.1.5"
+  }
 }
