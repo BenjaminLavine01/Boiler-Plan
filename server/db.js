@@ -1,20 +1,27 @@
-import pkg from "pg";
-const { Pool } = pkg;
-
-export const pool = new Pool({
-  connectionString: process.env.postgresql//postgres:KDkQwRAtaJPQyqsUahaLWMWZbIZcqnYP@postgres.railway.internal:5432/railway,
-   ssl: { rejectUnauthorized: false }
-});
-
 const { Pool } = require('pg');
 
-// Load env vars only if not in production (Railway/deployment)
+// Load env vars only if not in production (Vercel/Railway deployment)
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config({ path: require('path').resolve(__dirname, '../.env.local') });
 }
 
+// Use DATABASE_URL or POSTGRESQL_URL from environment
+// Railway provides DATABASE_URL, but we can also use POSTGRESQL_URL
+const connectionString = process.env.DATABASE_URL || process.env.POSTGRESQL_URL;
+
+if (!connectionString) {
+  console.error('❌ DATABASE_URL or POSTGRESQL_URL environment variable is not set');
+}
+
+// Create PostgreSQL connection pool
+// For Railway/cloud databases, SSL is required
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: connectionString,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  // Connection pool settings for serverless (Vercel)
+  max: 2, // Limit connections for serverless
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 10000,
 });
 
 // Initialize database tables
