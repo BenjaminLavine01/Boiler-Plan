@@ -70,6 +70,23 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message || 'Internal server error' });
 });
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Purdue Project API Server',
+    status: 'running',
+    database: 'PostgreSQL',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      semesters: '/api/semesters',
+      courses: '/api/courses',
+      internships: '/api/internships',
+      purdueCourses: '/api/purdue-courses'
+    }
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'Server is running', database: 'PostgreSQL' });
