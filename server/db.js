@@ -1,5 +1,9 @@
 const { Pool } = require('pg');
-require('dotenv').config({ path: require('path').resolve(__dirname, '../.env.local') });
+
+// Load env vars only if not in production (Railway/deployment)
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: require('path').resolve(__dirname, '../.env.local') });
+}
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,

@@ -1,7 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-require('dotenv').config({ path: require('path').resolve(__dirname, '../.env.local') });
+
+// Load env vars only if not in production (Railway/deployment)
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: require('path').resolve(__dirname, '../.env.local') });
+}
 
 const app = express();
 
