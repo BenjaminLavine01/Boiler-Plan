@@ -37,10 +37,20 @@ Before starting, make sure you have:
 4. **Click the copy icon** (📋) next to the value to copy it
 5. **Save this somewhere safe** - you'll need it in a few steps!
 
-**Example format:**
-```
-postgresql://postgres:ABC123xyz@switchback.proxy.rlwy.net:23235/railway
-```
+**⚠️ IMPORTANT: Use the PUBLIC connection string!**
+
+- ✅ **CORRECT (Public)**: `postgresql://postgres:password@switchback.proxy.rlwy.net:23235/railway`
+  - Host contains: `switchback.proxy.rlwy.net`, `proxy.rlwy.net`, or similar public domain
+  - This works from Vercel and external services
+  
+- ❌ **WRONG (Internal)**: `postgresql://postgres:password@postgres.railway.internal:5432/railway`
+  - Host contains: `postgres.railway.internal`
+  - This ONLY works within Railway's network, NOT from Vercel!
+
+**If you only see the internal URL:**
+1. Go to the **"Connect"** tab in your PostgreSQL service
+2. Look for **"Public Network"** or **"External Connection"**
+3. Copy that connection string instead
 
 ---
 
@@ -260,7 +270,27 @@ REACT_APP_API_URL = https://your-backend.vercel.app
 3. Make sure it starts with `https://`
 4. Test backend URL directly: `https://your-backend.vercel.app/api/health`
 
-### Issue 4: Database Connection Error
+### Issue 4: Database Connection Error - "getaddrinfo ENOTFOUND postgres.railway.internal"
+
+**Error Message:** `getaddrinfo ENOTFOUND postgres.railway.internal`
+
+**Cause:** You're using Railway's **internal** connection string, which only works within Railway's network. Vercel needs the **public** connection string.
+
+**Solution:**
+1. Go to Railway → Your PostgreSQL service → **"Connect"** tab
+2. Look for **"Public Network"** or **"External Connection"** section
+3. Copy the connection string that has:
+   - ✅ `switchback.proxy.rlwy.net` or `proxy.rlwy.net` (public domain)
+   - ❌ NOT `postgres.railway.internal` (internal only)
+4. Go to Vercel → Your backend project → **Settings** → **Environment Variables**
+5. Update `DATABASE_URL` with the **public** connection string
+6. **Redeploy** your backend project
+
+**Example:**
+- ❌ Wrong: `postgresql://postgres:pass@postgres.railway.internal:5432/railway`
+- ✅ Correct: `postgresql://postgres:pass@switchback.proxy.rlwy.net:23235/railway`
+
+### Issue 5: Other Database Connection Errors
 
 **Check:**
 1. Verify `DATABASE_URL` in backend environment variables
