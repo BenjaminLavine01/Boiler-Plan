@@ -18,6 +18,9 @@ const options = {
   }
 };
 
+console.log('Starting registration test...');
+console.log('Sending:', data);
+
 const req = http.request(options, (res) => {
   let body = '';
   res.on('data', (chunk) => { body += chunk; });
@@ -29,9 +32,16 @@ const req = http.request(options, (res) => {
 });
 
 req.on('error', (error) => {
-  console.error(`Error: ${error.message}`);
+  console.error(`Connection Error: ${error.code} - ${error.message}`);
+  console.error('Full error:', error);
   process.exit(1);
 });
 
+req.on('timeout', () => {
+  console.error('Request timeout');
+  process.exit(1);
+});
+
+req.setTimeout(5000);
 req.write(data);
 req.end();
