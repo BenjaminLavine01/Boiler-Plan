@@ -1,14 +1,25 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, TrendingUp, BookOpen } from 'lucide-react';
+import { Calendar, TrendingUp, BookOpen, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 import './LandingPage.css';
 
 function LandingPage() {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="landing-page-wrapper">
-      {/* Left Section - Dark with Features */}
+    <div className={`landing-page-wrapper landing-${theme}`}>
+      {/* Theme Toggle */}
+      <button
+        className="theme-toggle"
+        onClick={toggleTheme}
+        aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+      >
+        {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+      </button>
+
+      {/* Left Section - Features */}
       <section className="landing-left">
         <div className="left-content">
           {/* Logo */}
@@ -31,21 +42,21 @@ function LandingPage() {
           {/* Features */}
           <div className="features-list">
             <div className="feature-item">
-              <div className="feature-icon"><Calendar size={32} color="white" strokeWidth={1.5} /></div>
+              <div className="feature-icon"><Calendar size={28} strokeWidth={1.5} /></div>
               <div className="feature-content">
                 <h3>Smart Scheduling</h3>
                 <p>Optimize your semesters based on prerequisites and workload.</p>
               </div>
             </div>
             <div className="feature-item">
-              <div className="feature-icon"><TrendingUp size={32} color="white" strokeWidth={1.5} /></div>
+              <div className="feature-icon"><TrendingUp size={28} strokeWidth={1.5} /></div>
               <div className="feature-content">
                 <h3>Track Progress</h3>
                 <p>Visualize your path to graduation with real-time analytics.</p>
               </div>
             </div>
             <div className="feature-item">
-              <div className="feature-icon"><BookOpen size={32} color="white" strokeWidth={1.5} /></div>
+              <div className="feature-icon"><BookOpen size={28} strokeWidth={1.5} /></div>
               <div className="feature-content">
                 <h3>Course Catalog</h3>
                 <p>Browse and plan courses with Purdue-specific data.</p>
@@ -60,7 +71,7 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Right Section - Light with Login */}
+      {/* Right Section - Login CTA */}
       <section className="landing-right">
         <div className="right-content">
           <div className="welcome-section">
