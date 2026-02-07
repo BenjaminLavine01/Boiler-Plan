@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import './InternshipTracker.css';
 
 function InternshipTracker({ user }) {
@@ -7,45 +7,39 @@ function InternshipTracker({ user }) {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     company: '',
-    position: '',
-    semester: 'Summer',
-    year: new Date().getFullYear(),
-    status: 'Applied',
-    location: '',
-    stipend: 0
+    role: '',
+    startDate: '',
+    endDate: '',
+    description: ''
   });
 
   useEffect(() => {
-    fetchInternships();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+    if (user?.id) fetchInternships();
+  }, [user?.id]);
 
   const fetchInternships = async () => {
     try {
-      const response = await axios.get(`/api/internships/user/${user._id}`);
-      setInternships(response.data);
+      const response = await api.get(`/api/internships/user/${user.id}`);
+      setInternships(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error('Failed to fetch internships:', error);
+      setInternships([]);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/internships', {
-        ...formData,
-        userId: user._id
+      await api.post('/api/internships', {
+        userId: user.id,
+        company: formData.company,
+        role: formData.role,
+        startDate: formData.startDate || null,
+        endDate: formData.endDate || null,
+        description: formData.description || null
       });
       fetchInternships();
-      setFormData({
-        company: '',
-        position: '',
-        semester: 'Summer',
-        year: new Date().getFullYear(),
-        status: 'Applied',
-        location: '',
-        stipend: 0
-      });
+      setFormData({ company: '', role: '', startDate: '', endDate: '', description: '' });
       setShowForm(false);
     } catch (error) {
       console.error('Failed to create internship:', error);
@@ -55,7 +49,7 @@ function InternshipTracker({ user }) {
   const handleDelete = async (id) => {
     if (window.confirm('Delete this internship?')) {
       try {
-        await axios.delete(`/api/internships/${id}`);
+        await api.delete(`/api/internships/${id}`);
         fetchInternships();
       } catch (error) {
         console.error('Failed to delete internship:', error);
@@ -86,47 +80,28 @@ function InternshipTracker({ user }) {
           />
           <input
             type="text"
-            placeholder="Position"
-            value={formData.position}
-            onChange={(e) => setFormData({...formData, position: e.target.value})}
+            placeholder="Role / Position"
+            value={formData.role}
+            onChange={(e) => setFormData({...formData, role: e.target.value})}
             required
           />
-          <select 
-            value={formData.semester}
-            onChange={(e) => setFormData({...formData, semester: e.target.value})}
-          >
-            <option value="Spring">Spring</option>
-            <option value="Summer">Summer</option>
-            <option value="Fall">Fall</option>
-            <option value="Winter">Winter</option>
-          </select>
           <input
-            type="number"
-            placeholder="Year"
-            value={formData.year}
-            onChange={(e) => setFormData({...formData, year: parseInt(e.target.value)})}
-          />
-          <select 
-            value={formData.status}
-            onChange={(e) => setFormData({...formData, status: e.target.value})}
-          >
-            <option value="Applied">Applied</option>
-            <option value="Pending">Pending</option>
-            <option value="Accepted">Accepted</option>
-            <option value="Completed">Completed</option>
-            <option value="Rejected">Rejected</option>
-          </select>
-          <input
-            type="text"
-            placeholder="Location"
-            value={formData.location}
-            onChange={(e) => setFormData({...formData, location: e.target.value})}
+            type="date"
+            placeholder="Start Date"
+            value={formData.startDate}
+            onChange={(e) => setFormData({...formData, startDate: e.target.value})}
           />
           <input
-            type="number"
-            placeholder="Stipend ($)"
-            value={formData.stipend}
-            onChange={(e) => setFormData({...formData, stipend: parseInt(e.target.value)})}
+            type="date"
+            placeholder="End Date"
+            value={formData.endDate}
+            onChange={(e) => setFormData({...formData, endDate: e.target.value})}
+          />
+          <textarea
+            placeholder="Description (optional)"
+            value={formData.description}
+            onChange={(e) => setFormData({...formData, description: e.target.value})}
+            rows={2}
           />
           <button type="submit" className="btn btn-success">Add</button>
         </form>
@@ -137,22 +112,19 @@ function InternshipTracker({ user }) {
           <p className="empty-state">No internships logged yet. Start tracking your applications!</p>
         ) : (
           internships.map(internship => (
-            <div key={internship._id} className="internship-item">
+            <div key={internship.id} className="internship-item">
               <div className="internship-info">
                 <h3>{internship.company}</h3>
-                <p className="position">{internship.position}</p>
+                <p className="position">{internship.role}</p>
                 <div className="internship-details">
-                  <span>{internship.semester} {internship.year}</span>
-                  <span className={`status ${internship.status.toLowerCase()}`}>
-                    {internship.status}
-                  </span>
-                  {internship.location && <span>📍 {internship.location}</span>}
-                  {internship.stipend > 0 && <span>💰 ${internship.stipend}</span>}
+                  {internship.startDate && <span>From {new Date(internship.startDate).toLocaleDateString()}</span>}
+                  {internship.endDate && <span>To {new Date(internship.endDate).toLocaleDateString()}</span>}
+                  {internship.description && <span>{internship.description}</span>}
                 </div>
               </div>
               <button 
                 className="btn btn-danger btn-small"
-                onClick={() => handleDelete(internship._id)}
+                onClick={() => handleDelete(internship.id)}
               >
                 Delete
               </button>

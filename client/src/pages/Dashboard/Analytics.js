@@ -12,8 +12,8 @@ function Analytics({ user }) {
       <div className="analytics-grid">
         <div className="analytics-card">
           <h3>Years Until Graduation</h3>
-          <p className="stat">{user.graduationYear - new Date().getFullYear()}</p>
-          <p className="detail">{user.graduationYear}</p>
+          <p className="stat">{Math.max(0, (user.graduationYear || new Date().getFullYear() + 4) - new Date().getFullYear())}</p>
+          <p className="detail">{user.graduationYear || new Date().getFullYear() + 4}</p>
         </div>
 
         <div className="analytics-card">

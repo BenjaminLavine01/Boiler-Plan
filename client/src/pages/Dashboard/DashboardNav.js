@@ -35,7 +35,7 @@ function DashboardNav({ activeSection, onSectionChange, user, onLogout }) {
             className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
             onClick={() => onSectionChange(item.id)}
           >
-            <span className="icon"><item.icon size={20} color="white" strokeWidth={1.5} /></span>
+            <span className="icon"><item.icon size={20} strokeWidth={1.5} /></span>
             <span className="label">{item.label}</span>
           </button>
         ))}
@@ -60,12 +60,15 @@ function DashboardNav({ activeSection, onSectionChange, user, onLogout }) {
       </div>
 
       <div className="nav-footer">
-        <button className="nav-item profile-btn" onClick={() => navigate('/profile')}>
-          <span className="icon"><Settings size={20} color="white" strokeWidth={1.5} /></span>
+        <button
+          className={`nav-item profile-btn ${activeSection === 'settings' ? 'active' : ''}`}
+          onClick={() => onSectionChange('settings')}
+        >
+          <span className="icon"><Settings size={20} strokeWidth={1.5} /></span>
           <span className="label">Settings</span>
         </button>
         <button className="nav-item logout-btn" onClick={onLogout}>
-          <span className="icon"><LogOut size={20} color="white" strokeWidth={1.5} /></span>
+          <span className="icon"><LogOut size={20} strokeWidth={1.5} /></span>
           <span className="label">Sign Out</span>
         </button>
       </div>

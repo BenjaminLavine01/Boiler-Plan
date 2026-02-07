@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import './LoginPage.css';
 
 function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState('login');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -79,7 +81,8 @@ function LoginPage() {
   };
 
   return (
-    <div className="login-page">
+    <div className={`login-page login-page-${theme}`}>
+      <div className="login-background" />
       <div className="login-container">
         <div className="login-header">
           <h1>🎓 BoilerPlan</h1>
@@ -204,11 +207,9 @@ function LoginPage() {
         )}
 
         <div className="login-footer">
-          <a href="/">Back to Home</a>
+          <a href="/">← Back to Home</a>
         </div>
       </div>
-
-      <div className="login-background"></div>
     </div>
   );
 }

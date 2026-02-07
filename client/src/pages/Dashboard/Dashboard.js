@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
+import { Sun, Moon } from 'lucide-react';
 import './Dashboard.css';
 import DashboardNav from './DashboardNav';
 import SemesterPlanner from './SemesterPlanner';
@@ -11,6 +13,7 @@ import Analytics from './Analytics';
 function Dashboard() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState('overview');
 
   if (!user) {
@@ -24,7 +27,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="dashboard">
+    <div className={`dashboard dashboard-${theme}`}>
       <DashboardNav 
         activeSection={activeSection}
         onSectionChange={setActiveSection}
@@ -38,38 +41,41 @@ function Dashboard() {
         {activeSection === 'courses' && <CourseCatalog />}
         {activeSection === 'internships' && <InternshipTracker user={user} />}
         {activeSection === 'analytics' && <Analytics user={user} />}
+        {activeSection === 'settings' && <SettingsSection theme={theme} onToggleTheme={toggleTheme} user={user} />}
       </div>
     </div>
   );
 }
 
 function Overview({ user }) {
-  const yearsUntilGraduation = user.graduationYear - new Date().getFullYear();
+  const displayName = user.firstName || user.name || 'User';
+  const graduationYear = user.graduationYear || new Date().getFullYear() + 4;
+  const yearsUntilGraduation = Math.max(0, graduationYear - new Date().getFullYear());
 
   return (
     <div className="overview">
       <div className="welcome-section">
-        <h1>Welcome Back, {user.name}! 🎓</h1>
-        <p>You're {yearsUntilGraduation} years away from graduation</p>
+        <h1>Welcome Back, {displayName}! 🎓</h1>
+        <p>You're {yearsUntilGraduation} year{yearsUntilGraduation !== 1 ? 's' : ''} away from graduation</p>
       </div>
 
       <div className="overview-grid">
         <div className="overview-card">
           <h3>📚 Current Semesters</h3>
-          <p className="stat">{user.semesters?.length || 0}</p>
+          <p className="stat">{user.semesters?.length ?? 0}</p>
           <small>Total semesters planned</small>
         </div>
 
         <div className="overview-card">
           <h3>🏢 Internships</h3>
-          <p className="stat">{user.internships?.length || 0}</p>
-          <small>Total internship applications</small>
+          <p className="stat">{user.internships?.length ?? 0}</p>
+          <small>Total internships tracked</small>
         </div>
 
         <div className="overview-card">
           <h3>📊 Graduation Year</h3>
-          <p className="stat">{user.graduationYear}</p>
-          <small>{user.major}</small>
+          <p className="stat">{graduationYear}</p>
+          <small>{user.major || 'Plan your path'}</small>
         </div>
 
         <div className="overview-card">
@@ -107,6 +113,45 @@ function Overview({ user }) {
             <div className="step-number">4</div>
             <h3>Track Internships</h3>
             <p>Log your internship applications and offers to integrate them with your academic plan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SettingsSection({ theme, onToggleTheme, user }) {
+  return (
+    <div className="settings-section">
+      <div className="section-header">
+        <h1>⚙️ Settings</h1>
+        <p>Manage your account and preferences</p>
+      </div>
+
+      <div className="settings-cards">
+        <div className="settings-card">
+          <h3>Appearance</h3>
+          <p className="settings-desc">Choose light or dark mode for the app.</p>
+          <div className="theme-switch-row">
+            <span className="theme-label">{theme === 'dark' ? 'Dark' : 'Light'} mode</span>
+            <button
+              type="button"
+              className="theme-toggle-btn"
+              onClick={onToggleTheme}
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
+              <span>{theme === 'dark' ? 'Switch to Light' : 'Switch to Dark'}</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="settings-card">
+          <h3>Account</h3>
+          <p className="settings-desc">Your account details.</p>
+          <div className="account-info">
+            <p><strong>Name:</strong> {user.firstName || user.name || '—'} {user.lastName || ''}</p>
+            <p><strong>Email:</strong> {user.email}</p>
           </div>
         </div>
       </div>

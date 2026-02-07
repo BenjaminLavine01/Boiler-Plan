@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import Calendar from '../../components/Calendar';
 import './SemesterPlanner.css';
 
@@ -7,30 +7,34 @@ function SemesterPlanner({ user }) {
   const [semesters, setSemesters] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
     year: new Date().getFullYear(),
     season: 'Fall'
   });
 
   useEffect(() => {
-    fetchSemesters();
-  }, []);
+    if (user?.id) fetchSemesters();
+  }, [user?.id]);
 
   const fetchSemesters = async () => {
     try {
-      const response = await axios.get('/api/semesters');
-      setSemesters(response.data);
+      const response = await api.get(`/api/semesters?userId=${user.id}`);
+      setSemesters(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error('Failed to fetch semesters:', error);
+      setSemesters([]);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/semesters', formData);
+      await api.post('/api/semesters', {
+        userId: user.id,
+        term: formData.season,
+        year: formData.year
+      });
       fetchSemesters();
-      setFormData({ name: '', year: new Date().getFullYear(), season: 'Fall' });
+      setFormData({ year: new Date().getFullYear(), season: 'Fall' });
       setShowForm(false);
     } catch (error) {
       console.error('Failed to create semester:', error);
@@ -40,7 +44,7 @@ function SemesterPlanner({ user }) {
   const handleDelete = async (id) => {
     if (window.confirm('Delete this semester?')) {
       try {
-        await axios.delete(`/api/semesters/${id}`);
+        await api.delete(`/api/semesters/${id}`);
         fetchSemesters();
       } catch (error) {
         console.error('Failed to delete semester:', error);
@@ -62,13 +66,6 @@ function SemesterPlanner({ user }) {
 
       {showForm && (
         <form className="semester-form" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Semester Name"
-            value={formData.name}
-            onChange={(e) => setFormData({...formData, name: e.target.value})}
-            required
-          />
           <select 
             value={formData.season}
             onChange={(e) => setFormData({...formData, season: e.target.value})}
@@ -94,15 +91,15 @@ function SemesterPlanner({ user }) {
           <p className="empty-state">No semesters yet. Create one to get started!</p>
         ) : (
           semesters.map(semester => (
-            <div key={semester._id} className="semester-item">
+            <div key={semester.id} className="semester-item">
               <div className="semester-info">
-                <h3>{semester.name}</h3>
-                <p>{semester.season} {semester.year}</p>
-                <span className="course-count">{semester.courses?.length || 0} courses</span>
+                <h3>{semester.term} {semester.year}</h3>
+                <p>{semester.startDate ? new Date(semester.startDate).toLocaleDateString() : ''} – {semester.endDate ? new Date(semester.endDate).toLocaleDateString() : ''}</p>
+                <span className="course-count">Semester</span>
               </div>
               <button 
                 className="btn btn-danger btn-small"
-                onClick={() => handleDelete(semester._id)}
+                onClick={() => handleDelete(semester.id)}
               >
                 Delete
               </button>

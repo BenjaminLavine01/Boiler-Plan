@@ -1,7 +1,23 @@
 .dashboard {
   display: flex;
   min-height: 100vh;
-  background: #F4F4F4;
+  transition: background 0.3s ease;
+}
+
+.dashboard-dark {
+  background: #0f0f0f;
+}
+
+.dashboard-dark .dashboard-main {
+  background: #0f0f0f;
+}
+
+.dashboard-light {
+  background: #f5f5f4;
+}
+
+.dashboard-light .dashboard-main {
+  background: #f5f5f4;
 }
 
 .dashboard-main {
@@ -57,6 +73,68 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
   margin-bottom: 50px;
+}
+
+.dashboard-dark .overview-card,
+.dashboard-dark .overview-section,
+.dashboard-dark .step {
+  background: #1a1a1a;
+  border-color: rgba(206, 184, 136, 0.2);
+}
+
+.dashboard-dark .overview-card h3,
+.dashboard-dark .overview-section h2,
+.dashboard-dark .step h3,
+.dashboard-dark .overview-section .detail,
+.dashboard-dark .welcome-section {
+  color: #fff;
+}
+
+.dashboard-dark .overview-card small,
+.dashboard-dark .overview-card .quick-actions li,
+.dashboard-dark .step p {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dashboard-dark .step {
+  background: rgba(206, 184, 136, 0.08);
+}
+
+.dashboard-dark .welcome-section {
+  background: linear-gradient(135deg, rgba(206, 184, 136, 0.25) 0%, rgba(206, 184, 136, 0.15) 100%);
+  color: #000;
+}
+
+/* Dark mode for all dashboard main content */
+.dashboard-dark .dashboard-main .section-header h1,
+.dashboard-dark .dashboard-main .section-header p,
+.dashboard-dark .dashboard-main h1,
+.dashboard-dark .dashboard-main h2,
+.dashboard-dark .dashboard-main h3 {
+  color: #fff;
+}
+
+.dashboard-dark .dashboard-main .section-header {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-dark .dashboard-main p,
+.dashboard-dark .dashboard-main .empty-state,
+.dashboard-dark .dashboard-main .loading {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dashboard-dark .semester-planner .semester-item,
+.dashboard-dark .course-catalog .course-card,
+.dashboard-dark .internship-tracker .internship-item,
+.dashboard-dark .analytics .analytics-card {
+  background: #1a1a1a;
+  border-color: rgba(206, 184, 136, 0.2);
+}
+
+.dashboard-dark .analytics .analytics-section {
+  background: #1a1a1a;
+  border-color: rgba(206, 184, 136, 0.2);
 }
 
 .overview-card {
@@ -171,6 +249,100 @@
   color: #718096;
   line-height: 1.6;
   font-size: 0.95rem;
+}
+
+/* Settings section */
+.settings-section .section-header {
+  margin-bottom: 32px;
+}
+
+.settings-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 560px;
+}
+
+.settings-card {
+  background: white;
+  padding: 28px;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  transition: all 0.3s ease;
+}
+
+.dashboard-dark .settings-card {
+  background: #1a1a1a;
+  border-color: rgba(206, 184, 136, 0.2);
+}
+
+.settings-card h3 {
+  font-size: 1.1rem;
+  color: #2d3748;
+  margin: 0 0 8px 0;
+}
+
+.dashboard-dark .settings-card h3 {
+  color: #fff;
+}
+
+.settings-desc {
+  color: #718096;
+  font-size: 0.9rem;
+  margin: 0 0 20px 0;
+}
+
+.dashboard-dark .settings-desc {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.theme-switch-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.theme-label {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.dashboard-dark .theme-label {
+  color: #fff;
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #CEB888, #B09C6E);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.theme-toggle-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.dashboard-light .theme-toggle-btn {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  color: #fff;
+}
+
+.account-info p {
+  margin: 0 0 8px 0;
+  color: #4a5568;
+}
+
+.dashboard-dark .account-info p {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 @media (max-width: 768px) {
