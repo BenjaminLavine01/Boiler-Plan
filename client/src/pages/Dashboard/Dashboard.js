@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { Sun, Moon } from 'lucide-react';
+import api from '../../services/api';
 import './Dashboard.css';
 import DashboardNav from './DashboardNav';
 import SemesterPlanner from './SemesterPlanner';
@@ -12,7 +13,7 @@ import Analytics from './Analytics';
 
 function Dashboard() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState('overview');
 
@@ -41,7 +42,7 @@ function Dashboard() {
         {activeSection === 'courses' && <CourseCatalog />}
         {activeSection === 'internships' && <InternshipTracker user={user} />}
         {activeSection === 'analytics' && <Analytics user={user} />}
-        {activeSection === 'settings' && <SettingsSection theme={theme} onToggleTheme={toggleTheme} user={user} />}
+        {activeSection === 'settings' && <SettingsSection theme={theme} onToggleTheme={toggleTheme} user={user} onUpdateUser={updateUser} />}
       </div>
     </div>
   );
@@ -76,6 +77,12 @@ function Overview({ user }) {
           <h3>📊 Graduation Year</h3>
           <p className="stat">{graduationYear}</p>
           <small>{user.major || 'Plan your path'}</small>
+        </div>
+
+        <div className="overview-card">
+          <h3>📈 GPA</h3>
+          <p className="stat">{user.gpa != null ? Number(user.gpa).toFixed(2) : '—'}</p>
+          <small>Current GPA</small>
         </div>
 
         <div className="overview-card">
@@ -120,7 +127,39 @@ function Overview({ user }) {
   );
 }
 
-function SettingsSection({ theme, onToggleTheme, user }) {
+function SettingsSection({ theme, onToggleTheme, user, onUpdateUser }) {
+  const [major, setMajor] = React.useState(user.major || '');
+  const [graduationYear, setGraduationYear] = React.useState(user.graduationYear != null ? String(user.graduationYear) : '');
+  const [gpa, setGpa] = React.useState(user.gpa != null ? String(user.gpa) : '');
+  const [profileSaving, setProfileSaving] = React.useState(false);
+  const [profileSaved, setProfileSaved] = React.useState(false);
+
+  React.useEffect(() => {
+    setMajor(user.major || '');
+    setGraduationYear(user.graduationYear != null ? String(user.graduationYear) : '');
+    setGpa(user.gpa != null ? String(user.gpa) : '');
+  }, [user.major, user.graduationYear, user.gpa]);
+
+  const handleSaveProfile = async (e) => {
+    e.preventDefault();
+    setProfileSaving(true);
+    setProfileSaved(false);
+    try {
+      const res = await api.put('/api/auth/profile', {
+        userId: user.id,
+        major: major.trim() || null,
+        graduationYear: graduationYear.trim() ? parseInt(graduationYear, 10) : null,
+        gpa: gpa.trim() ? parseFloat(gpa) : null
+      });
+      onUpdateUser(res.data);
+      setProfileSaved(true);
+    } catch (err) {
+      console.error('Failed to save profile', err);
+    } finally {
+      setProfileSaving(false);
+    }
+  };
+
   return (
     <div className="settings-section">
       <div className="section-header">
@@ -153,6 +192,50 @@ function SettingsSection({ theme, onToggleTheme, user }) {
             <p><strong>Name:</strong> {user.firstName || user.name || '—'} {user.lastName || ''}</p>
             <p><strong>Email:</strong> {user.email}</p>
           </div>
+        </div>
+
+        <div className="settings-card">
+          <h3>Academic Profile</h3>
+          <p className="settings-desc">Major, graduation year, and GPA. Graduation year can be any year.</p>
+          <form className="profile-form" onSubmit={handleSaveProfile}>
+            <div className="form-row">
+              <label>Major</label>
+              <input
+                type="text"
+                placeholder="e.g. Computer Science"
+                value={major}
+                onChange={(e) => setMajor(e.target.value)}
+              />
+            </div>
+            <div className="form-row">
+              <label>Graduation Year</label>
+              <input
+                type="number"
+                placeholder="e.g. 2027 (any year)"
+                value={graduationYear}
+                onChange={(e) => setGraduationYear(e.target.value)}
+                step="1"
+              />
+            </div>
+            <div className="form-row">
+              <label>GPA</label>
+              <input
+                type="number"
+                placeholder="e.g. 3.75"
+                value={gpa}
+                onChange={(e) => setGpa(e.target.value)}
+                min="0"
+                max="4"
+                step="0.01"
+              />
+            </div>
+            <div className="form-actions">
+              <button type="submit" className="theme-toggle-btn" disabled={profileSaving}>
+                {profileSaving ? 'Saving...' : 'Save Profile'}
+              </button>
+              {profileSaved && <span className="saved-badge">Saved</span>}
+            </div>
+          </form>
         </div>
       </div>
     </div>

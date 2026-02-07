@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
 
     // Find user
     const userResult = await pool.query(
-      'SELECT id, email, password, firstName, lastName FROM users WHERE email = $1',
+      'SELECT id, email, password, firstName, lastName, major, "graduationYear", gpa FROM users WHERE email = $1',
       [email]
     );
 
@@ -87,6 +87,9 @@ router.post('/login', async (req, res) => {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      major: user.major || null,
+      graduationYear: user.graduationYear || null,
+      gpa: user.gpa != null ? parseFloat(user.gpa) : null,
       semesters: semestersResult.rows,
       message: 'Login successful'
     });
@@ -96,11 +99,49 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Update user profile (major, graduationYear, gpa)
+router.put('/profile', async (req, res) => {
+  try {
+    const { userId, major, graduationYear, gpa } = req.body;
+    if (!userId) {
+      return res.status(400).json({ message: 'userId required' });
+    }
+
+    const result = await pool.query(
+      `UPDATE users SET 
+        major = COALESCE($1, major),
+        "graduationYear" = COALESCE($2, "graduationYear"),
+        gpa = COALESCE($3, gpa)
+       WHERE id = $4
+       RETURNING id, email, "firstName", "lastName", major, "graduationYear", gpa`,
+      [major ?? null, graduationYear ?? null, gpa ?? null, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const user = result.rows[0];
+    res.json({
+      id: user.id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      major: user.major || null,
+      graduationYear: user.graduationYear || null,
+      gpa: user.gpa != null ? parseFloat(user.gpa) : null
+    });
+  } catch (error) {
+    console.error('Update profile error:', error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Get user profile
 router.get('/:id', async (req, res) => {
   try {
     const userResult = await pool.query(
-      'SELECT id, email, firstName, lastName FROM users WHERE id = $1',
+      'SELECT id, email, "firstName", "lastName", major, "graduationYear", gpa FROM users WHERE id = $1',
       [req.params.id]
     );
 
@@ -127,6 +168,9 @@ router.get('/:id', async (req, res) => {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      major: user.major || null,
+      graduationYear: user.graduationYear || null,
+      gpa: user.gpa != null ? parseFloat(user.gpa) : null,
       semesters: semestersResult.rows,
       internships: internshipsResult.rows
     });

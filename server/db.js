@@ -96,6 +96,30 @@ async function initializeDatabase() {
       );
     `);
 
+    // Add user profile columns if not exist (major, graduationYear, gpa)
+    await pool.query(`
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS major VARCHAR(200);
+    `).catch(() => {});
+    await pool.query(`
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS "graduationYear" INTEGER;
+    `).catch(() => {});
+    await pool.query(`
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS gpa DECIMAL(3,2);
+    `).catch(() => {});
+
+    // Semester timetable (weekly schedule slots per semester): dayOfWeek 1=Mon .. 7=Sun
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS semester_timetable (
+        id SERIAL PRIMARY KEY,
+        semesterId INTEGER NOT NULL REFERENCES semesters(id) ON DELETE CASCADE,
+        dayOfWeek INTEGER NOT NULL,
+        startTime VARCHAR(10) NOT NULL,
+        endTime VARCHAR(10) NOT NULL,
+        courseLabel VARCHAR(200) NOT NULL,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
     console.log('✅ Database tables initialized successfully');
   } catch (error) {
     console.error('❌ Error initializing database:', error);

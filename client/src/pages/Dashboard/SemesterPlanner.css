@@ -128,6 +128,134 @@
   border-color: #CEB888;
 }
 
+.semester-item-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-tiny {
+  padding: 4px 10px !important;
+  font-size: 1rem !important;
+  line-height: 1;
+}
+
+.timetable-section {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 2px solid #e2e8f0;
+}
+
+.timetable-section h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.35rem;
+  color: #2d3748;
+}
+
+.timetable-section > .btn {
+  margin-bottom: 20px;
+}
+
+.timetable-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: #f7fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.timetable-form select,
+.timetable-form input[type="time"],
+.timetable-form input[type="text"] {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: white;
+  color: #2d3748;
+}
+
+.timetable-form input[type="text"] {
+  min-width: 220px;
+}
+
+.timetable-form input:focus,
+.timetable-form select:focus {
+  outline: none;
+  border-color: #CEB888;
+}
+
+.timetable-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.timetable-day {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #CEB888;
+}
+
+.timetable-day h4 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  color: #2d3748;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.timetable-day ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.timetable-day .no-slots {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #a0aec0;
+}
+
+.timetable-slot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+}
+
+.timetable-slot:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.timetable-slot .slot-time {
+  color: #718096;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.timetable-slot .slot-course {
+  font-weight: 600;
+  color: #2d3748;
+  flex: 1;
+  min-width: 0;
+}
+
+.timetable-slot .btn-tiny {
+  flex-shrink: 0;
+}
+
 .semester-info h3 {
   margin: 0 0 5px 0;
   color: #2d3748;

@@ -57,8 +57,10 @@ const courseRoutes = require('./routes/courses');
 const authRoutes = require('./routes/auth');
 const internshipRoutes = require('./routes/internships');
 const purdueCoursesRoutes = require('./routes/purdue-courses');
+const timetableRoutes = require('./routes/timetable');
 
 app.use('/api/semesters', semesterRoutes);
+app.use('/api/timetable', timetableRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/internships', internshipRoutes);

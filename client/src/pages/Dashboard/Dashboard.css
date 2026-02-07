@@ -345,6 +345,54 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+.profile-form .form-row {
+  margin-bottom: 16px;
+}
+
+.profile-form .form-row label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #2d3748;
+}
+
+.dashboard-dark .profile-form .form-row label {
+  color: #fff;
+}
+
+.profile-form .form-row input {
+  width: 100%;
+  max-width: 280px;
+  padding: 10px 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.dashboard-dark .profile-form .form-row input {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(206, 184, 136, 0.3);
+  color: #fff;
+}
+
+.profile-form .form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.profile-form .saved-badge {
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.dashboard-dark .profile-form .saved-badge {
+  color: #4ade80;
+}
+
 @media (max-width: 768px) {
   .dashboard {
     flex-direction: column;
