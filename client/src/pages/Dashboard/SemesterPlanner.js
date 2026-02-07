@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import api from '../../services/api';
 import Calendar from '../../components/Calendar';
 import './SemesterPlanner.css';
@@ -11,11 +11,8 @@ function SemesterPlanner({ user }) {
     season: 'Fall'
   });
 
-  useEffect(() => {
-    if (user?.id) fetchSemesters();
-  }, [user?.id]);
-
-  const fetchSemesters = async () => {
+  const fetchSemesters = useCallback(async () => {
+    if (!user?.id) return;
     try {
       const response = await api.get(`/api/semesters?userId=${user.id}`);
       setSemesters(Array.isArray(response.data) ? response.data : []);
@@ -23,7 +20,11 @@ function SemesterPlanner({ user }) {
       console.error('Failed to fetch semesters:', error);
       setSemesters([]);
     }
-  };
+  }, [user?.id]);
+
+  useEffect(() => {
+    fetchSemesters();
+  }, [fetchSemesters]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

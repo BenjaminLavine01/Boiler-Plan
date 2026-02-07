@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import api from '../../services/api';
 import './InternshipTracker.css';
 
@@ -13,11 +13,8 @@ function InternshipTracker({ user }) {
     description: ''
   });
 
-  useEffect(() => {
-    if (user?.id) fetchInternships();
-  }, [user?.id]);
-
-  const fetchInternships = async () => {
+  const fetchInternships = useCallback(async () => {
+    if (!user?.id) return;
     try {
       const response = await api.get(`/api/internships/user/${user.id}`);
       setInternships(Array.isArray(response.data) ? response.data : []);
@@ -25,7 +22,11 @@ function InternshipTracker({ user }) {
       console.error('Failed to fetch internships:', error);
       setInternships([]);
     }
-  };
+  }, [user?.id]);
+
+  useEffect(() => {
+    fetchInternships();
+  }, [fetchInternships]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Calendar, BookOpen, Briefcase, BarChart3, Settings, LogOut, TrendingUp } from 'lucide-react';
 import './DashboardNav.css';
 
 function DashboardNav({ activeSection, onSectionChange, user, onLogout }) {
-  const navigate = useNavigate();
 
   const menuItems = [
     { id: 'overview', label: 'Dashboard', icon: LayoutDashboard },
