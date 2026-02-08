@@ -175,6 +175,12 @@
   background: rgba(255, 255, 255, 0.95);
 }
 
+.dashboard-dark .overview-card:hover {
+  background: #252525;
+  box-shadow: 0 6px 16px rgba(206, 184, 136, 0.2);
+  border-color: rgba(206, 184, 136, 0.4);
+}
+
 .overview-card h3 {
   font-size: 12px;
   color: #718096;
@@ -246,6 +252,11 @@
   background: white;
   box-shadow: 0 4px 12px rgba(206, 184, 136, 0.12);
   transform: translateY(-2px);
+}
+
+.dashboard-dark .step:hover {
+  background: #252525;
+  box-shadow: 0 4px 12px rgba(206, 184, 136, 0.2);
 }
 
 .step-number {

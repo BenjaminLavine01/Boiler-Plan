@@ -163,18 +163,18 @@
 }
 
 .nav-item:hover {
-  background: rgba(207, 181, 59, 0.35);
-  color: #1a1a1a !important;
-  border-color: rgba(206, 184, 136, 0.3);
+  background: rgba(207, 181, 59, 0.12);
+  color: #ffffff !important;
+  border-color: rgba(206, 184, 136, 0.15);
 }
 
 .nav-item.active {
-  background: rgba(207, 181, 59, 0.15);
+  background: rgba(207, 181, 59, 0.08);
   color: #CEB888;
   font-weight: 600;
   border-left: 3px solid #CEB888;
   padding-left: 13px;
-  box-shadow: 0 0 20px rgba(206, 184, 136, 0.3);
+  box-shadow: 0 0 8px rgba(206, 184, 136, 0.1);
 }
 
 .icon {
