@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BookMarked, BookOpen as BookIcon } from 'lucide-react';
+import { BookOpen as BookIcon } from 'lucide-react';
 import api from '../../services/api';
 import './CourseCatalog.css';
 
