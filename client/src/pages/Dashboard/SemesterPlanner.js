@@ -20,7 +20,6 @@ function SemesterPlanner({ user }) {
     startTime: '09:00',
     endTime: '10:00'
   });
-  const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const fetchSemesters = useCallback(async () => {
     if (!user?.id) return;
