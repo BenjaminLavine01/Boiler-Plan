@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Calendar.css';
 
-function Calendar() {
+function Calendar({ selectedDate, onDateSelect }) {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const getDaysInMonth = (date) => {
@@ -38,10 +38,26 @@ function Calendar() {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
   };
 
+  const handleDateClick = (day) => {
+    if (day && onDateSelect) {
+      const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+      onDateSelect(date);
+    }
+  };
+
   const today = new Date();
   const isCurrentMonth = 
     today.getFullYear() === currentDate.getFullYear() && 
     today.getMonth() === currentDate.getMonth();
+
+  const isDateSelected = (day) => {
+    if (!selectedDate || !day) return false;
+    return (
+      selectedDate.getFullYear() === currentDate.getFullYear() &&
+      selectedDate.getMonth() === currentDate.getMonth() &&
+      selectedDate.getDate() === day
+    );
+  };
 
   return (
     <div className="calendar-container">
@@ -65,7 +81,16 @@ function Calendar() {
             key={index}
             className={`calendar-day ${day ? 'active' : 'empty'} ${
               isCurrentMonth && day === today.getDate() ? 'today' : ''
-            }`}
+            } ${isDateSelected(day) ? 'selected' : ''}`}
+            onClick={() => handleDateClick(day)}
+            role="button"
+            tabIndex={day ? 0 : -1}
+            onKeyDown={(e) => {
+              if (day && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                handleDateClick(day);
+              }
+            }}
           >
             {day}
           </div>

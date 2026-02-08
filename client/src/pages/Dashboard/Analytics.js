@@ -1,11 +1,12 @@
 import React from 'react';
+import { TrendingUp, CheckCircle2 } from 'lucide-react';
 import './Analytics.css';
 
 function Analytics({ user }) {
   return (
     <div className="analytics">
       <div className="section-header">
-        <h1>📈 Analytics & Progress</h1>
+        <h1><TrendingUp size={32} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />Analytics & Progress</h1>
         <p>Track your academic progress toward graduation</p>
       </div>
 
@@ -41,11 +42,11 @@ function Analytics({ user }) {
         <h2>Coming Soon</h2>
         <p>Detailed analytics features including:</p>
         <ul>
-          <li>✓ GPA tracking and calculations</li>
-          <li>✓ Degree requirement progress</li>
-          <li>✓ Course load analysis</li>
-          <li>✓ Graduation timeline projection</li>
-          <li>✓ Grade distribution charts</li>
+          <li><CheckCircle2 size={16} style={{ display: 'inline-block', marginRight: '6px', verticalAlign: 'middle' }} />GPA tracking and calculations</li>
+          <li><CheckCircle2 size={16} style={{ display: 'inline-block', marginRight: '6px', verticalAlign: 'middle' }} />Degree requirement progress</li>
+          <li><CheckCircle2 size={16} style={{ display: 'inline-block', marginRight: '6px', verticalAlign: 'middle' }} />Course load analysis</li>
+          <li><CheckCircle2 size={16} style={{ display: 'inline-block', marginRight: '6px', verticalAlign: 'middle' }} />Graduation timeline projection</li>
+          <li><CheckCircle2 size={16} style={{ display: 'inline-block', marginRight: '6px', verticalAlign: 'middle' }} />Grade distribution charts</li>
         </ul>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BookOpen, CheckCircle2 } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -85,7 +86,7 @@ function LoginPage() {
       <div className="login-background" />
       <div className="login-container">
         <div className="login-header">
-          <h1>🎓 BoilerPlan</h1>
+          <h1><BookOpen size={32} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} /> BoilerPlan</h1>
           <p>Master Your Academic Journey</p>
         </div>
 
@@ -138,7 +139,7 @@ function LoginPage() {
             </button>
 
             <div className="secure-notice">
-              <p>✓ Secure Access</p>
+              <p><CheckCircle2 size={16} style={{ display: 'inline-block', marginRight: '6px', verticalAlign: 'middle' }} />Secure Access</p>
               <small>By signing in, you agree to our Terms of Service and Privacy Policy</small>
             </div>
           </form>
@@ -200,7 +201,7 @@ function LoginPage() {
             </button>
 
             <div className="secure-notice">
-              <p>✓ Secure Access</p>
+              <p><CheckCircle2 size={16} style={{ display: 'inline-block', marginRight: '6px', verticalAlign: 'middle' }} />Secure Access</p>
               <small>By creating an account, you agree to our Terms of Service and Privacy Policy</small>
             </div>
           </form>

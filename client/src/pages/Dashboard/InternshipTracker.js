@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Briefcase } from 'lucide-react';
 import api from '../../services/api';
 import './InternshipTracker.css';
 
@@ -61,7 +62,7 @@ function InternshipTracker({ user }) {
   return (
     <div className="internship-tracker">
       <div className="section-header">
-        <h1>🏢 Internship Tracker</h1>
+        <h1><Briefcase size={32} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />Internship Tracker</h1>
         <button 
           className="btn btn-primary"
           onClick={() => setShowForm(!showForm)}

@@ -34,9 +34,8 @@
 }
 
 .calendar-nav-btn:hover {
-  background: rgba(207, 181, 59, 0.4);
+  background: rgba(207, 181, 59, 0.3);
   border-color: #CEB888;
-  box-shadow: 0 0 20px rgba(206, 184, 136, 0.3);
 }
 
 .calendar-grid {
@@ -85,6 +84,14 @@
   color: #CEB888;
   font-weight: 700;
   border-color: #CEB888;
+}
+
+.calendar-day.selected {
+  background: linear-gradient(135deg, rgba(206, 184, 136, 0.8) 0%, rgba(206, 184, 136, 0.6) 100%);
+  color: #000;
+  font-weight: 700;
+  border-color: #CEB888;
+
 }
 
 .calendar-day.empty {

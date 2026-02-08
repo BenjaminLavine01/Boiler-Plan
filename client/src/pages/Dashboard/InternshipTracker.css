@@ -2,15 +2,66 @@
   animation: fadeIn 0.3s ease;
 }
 
-.internship-form {
+/* Dark mode styles */
+.dashboard-dark .internship-form {
+  background: #1a1a1a;
+  border-color: rgba(206, 184, 136, 0.2);
+}
+
+.dashboard-dark .internship-form input,
+.dashboard-dark .internship-form select {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(206, 184, 136, 0.3);
+  color: #fff;
+}
+
+.dashboard-dark .internship-form input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.dashboard-dark .internship-form input:focus,
+.dashboard-dark .internship-form select:focus {
+  border-color: #CEB888;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-dark .internship-item {
+  background: #1a1a1a;
+  border-color: rgba(206, 184, 136, 0.2);
+}
+
+.dashboard-dark .internship-info h3 {
+  color: #fff;
+}
+
+.dashboard-dark .internship-details {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dashboard-dark .position {
+  color: #CEB888;
+}
+
+.dashboard-dark .internship-item:hover {
+  box-shadow: 0 4px 12px rgba(206, 184, 136, 0.2);
+}
+
+.dashboard-dark .status {
+  color: #fff;
+}
+
+/* Light mode styles (default) */.internship-form {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 15px;
   margin-bottom: 30px;
-  padding: 20px;
+  padding: 24px;
   background: white;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  border: 1px solid rgba(206, 184, 136, 0.15);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .internship-form input,
@@ -28,7 +79,7 @@
 .internship-form select:focus {
   outline: none;
   border-color: #CEB888;
-  box-shadow: 0 0 0 3px rgba(207, 181, 59, 0.1), 0 0 20px rgba(206, 184, 136, 0.2);
+  box-shadow: 0 0 0 2px rgba(207, 181, 59, 0.1);
 }
 
 .internships-list {
@@ -38,22 +89,23 @@
 
 .internship-item {
   background: white;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 24px;
+  border-radius: 12px;
   border-left: 4px solid #CEB888;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(206, 184, 136, 0.15);
   border-left: 4px solid #CEB888;
 }
 
 .internship-item:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 0 20px rgba(206, 184, 136, 0.3);
-  transform: translateX(5px);
-  border-color: #CEB888;
+  box-shadow: 0 4px 12px rgba(206, 184, 136, 0.12);
+  transform: translateY(-2px);
+  border-color: rgba(206, 184, 136, 0.25);
+  background: rgba(255, 255, 255, 0.98);
 }
 
 .internship-info h3 {

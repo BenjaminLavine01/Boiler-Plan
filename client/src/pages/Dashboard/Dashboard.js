@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, GraduationCap, BookOpen as BookIcon, Briefcase, BarChart3, TrendingUp, Zap, CheckCircle2, Settings as SettingsIcon } from 'lucide-react';
 import api from '../../services/api';
 import './Dashboard.css';
 import DashboardNav from './DashboardNav';
@@ -56,41 +56,41 @@ function Overview({ user }) {
   return (
     <div className="overview">
       <div className="welcome-section">
-        <h1>Welcome Back, {displayName}! 🎓</h1>
+        <h1><GraduationCap size={32} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} /> Welcome Back, {displayName}!</h1>
         <p>You're {yearsUntilGraduation} year{yearsUntilGraduation !== 1 ? 's' : ''} away from graduation</p>
       </div>
 
       <div className="overview-grid">
         <div className="overview-card">
-          <h3>📚 Current Semesters</h3>
+          <h3><BookIcon size={24} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />Current Semesters</h3>
           <p className="stat">{user.semesters?.length ?? 0}</p>
           <small>Total semesters planned</small>
         </div>
 
         <div className="overview-card">
-          <h3>🏢 Internships</h3>
+          <h3><Briefcase size={24} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />Internships</h3>
           <p className="stat">{user.internships?.length ?? 0}</p>
           <small>Total internships tracked</small>
         </div>
 
         <div className="overview-card">
-          <h3>📊 Graduation Year</h3>
+          <h3><BarChart3 size={24} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />Graduation Year</h3>
           <p className="stat">{graduationYear}</p>
           <small>{user.major || 'Plan your path'}</small>
         </div>
 
         <div className="overview-card">
-          <h3>📈 GPA</h3>
+          <h3><TrendingUp size={24} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />GPA</h3>
           <p className="stat">{user.gpa != null ? Number(user.gpa).toFixed(2) : '—'}</p>
           <small>Current GPA</small>
         </div>
 
         <div className="overview-card">
-          <h3>⚡ Quick Actions</h3>
+          <h3><Zap size={24} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />Quick Actions</h3>
           <ul className="quick-actions">
-            <li>✓ Plan a semester</li>
-            <li>✓ Browse courses</li>
-            <li>✓ Track internships</li>
+            <li><CheckCircle2 size={16} style={{ display: 'inline-block', marginRight: '6px', verticalAlign: 'middle' }} />Plan a semester</li>
+            <li><CheckCircle2 size={16} style={{ display: 'inline-block', marginRight: '6px', verticalAlign: 'middle' }} />Browse courses</li>
+            <li><CheckCircle2 size={16} style={{ display: 'inline-block', marginRight: '6px', verticalAlign: 'middle' }} />Track internships</li>
           </ul>
         </div>
       </div>
@@ -163,7 +163,7 @@ function SettingsSection({ theme, onToggleTheme, user, onUpdateUser }) {
   return (
     <div className="settings-section">
       <div className="section-header">
-        <h1>⚙️ Settings</h1>
+        <h1><SettingsIcon size={32} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />Settings</h1>
         <p>Manage your account and preferences</p>
       </div>
 

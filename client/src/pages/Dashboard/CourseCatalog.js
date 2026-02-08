@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BookMarked, BookOpen as BookIcon } from 'lucide-react';
 import api from '../../services/api';
 import './CourseCatalog.css';
 
@@ -27,7 +28,7 @@ function CourseCatalog() {
   return (
     <div className="course-catalog">
       <div className="section-header">
-        <h1>📖 Course Catalog</h1>
+        <h1><BookIcon size={32} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />Course Catalog</h1>
         <p>Browse Purdue courses with details on prerequisites and difficulty</p>
       </div>
 

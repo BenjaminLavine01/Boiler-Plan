@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { BookOpen as BookIcon, Calendar as CalendarIcon } from 'lucide-react';
 import api from '../../services/api';
 import Calendar from '../../components/Calendar';
 import './SemesterPlanner.css';
@@ -21,6 +22,7 @@ function SemesterPlanner({ user }) {
     endTime: '10:00',
     courseLabel: ''
   });
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const fetchSemesters = useCallback(async () => {
     if (!user?.id) return;
@@ -103,9 +105,18 @@ function SemesterPlanner({ user }) {
       fetchTimetable();
       setSlotForm({ dayOfWeek: 1, startTime: '09:00', endTime: '10:00', courseLabel: '' });
       setShowTimetableForm(false);
+      setSelectedDate(null);
     } catch (error) {
       console.error('Failed to add timetable slot:', error);
     }
+  };
+
+  const handleDateSelect = (date) => {
+    // Calculate day of week (0 = Sunday, need to convert to 1 = Monday format)
+    const dayOfWeek = date.getDay() === 0 ? 7 : date.getDay();
+    setSelectedDate(date);
+    setSlotForm({ ...slotForm, dayOfWeek });
+    setShowTimetableForm(true);
   };
 
   const handleDeleteSlot = async (id) => {
@@ -141,7 +152,7 @@ function SemesterPlanner({ user }) {
   return (
     <div className="semester-planner">
       <div className="section-header">
-        <h1>📚 Semester Planner</h1>
+        <h1><BookIcon size={32} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />Semester Planner</h1>
         <button 
           className="btn btn-primary"
           onClick={() => setShowForm(!showForm)}
@@ -205,17 +216,16 @@ function SemesterPlanner({ user }) {
 
       {selectedSemester && (
         <div className="timetable-section">
-          <h2>📅 Weekly Timetable — {selectedSemester.term} {selectedSemester.year}</h2>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => setShowTimetableForm(!showTimetableForm)}
-          >
-            {showTimetableForm ? 'Cancel' : '+ Add time slot'}
-          </button>
-
+          <h2><CalendarIcon size={32} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />Weekly Timetable — {selectedSemester.term} {selectedSemester.year}</h2>
+          
           {showTimetableForm && (
             <form className="timetable-form" onSubmit={handleAddSlot}>
+              {selectedDate && (
+                <div className="selected-date-display">
+                  <p className="date-label">Adding class on:</p>
+                  <p className="date-value">{selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}</p>
+                </div>
+              )}
               <select
                 value={slotForm.dayOfWeek}
                 onChange={(e) => setSlotForm({ ...slotForm, dayOfWeek: parseInt(e.target.value, 10) })}
@@ -242,7 +252,27 @@ function SemesterPlanner({ user }) {
                 required
               />
               <button type="submit" className="btn btn-success">Add slot</button>
+              <button 
+                type="button"
+                onClick={() => {
+                  setShowTimetableForm(false);
+                  setSelectedDate(null);
+                }}
+                className="btn btn-secondary"
+              >
+                Cancel
+              </button>
             </form>
+          )}
+
+          {!showTimetableForm && (
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => setShowTimetableForm(true)}
+            >
+              + Add time slot
+            </button>
           )}
 
           <div className="timetable-grid">
@@ -272,10 +302,13 @@ function SemesterPlanner({ user }) {
               </div>
             ))}
           </div>
+
+          <div className="calendar-section">
+            <h3>Click a date to add a class</h3>
+            <Calendar selectedDate={selectedDate} onDateSelect={handleDateSelect} />
+          </div>
         </div>
       )}
-
-      <Calendar />
     </div>
   );
 }
