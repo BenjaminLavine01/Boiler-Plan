@@ -164,8 +164,12 @@
 
 .nav-item:hover {
   background: rgba(207, 181, 59, 0.12);
-  color: #ffffff !important;
+  color: #1a1a1a !important;
   border-color: rgba(206, 184, 136, 0.15);
+}
+
+.dashboard-dark .nav-item:hover {
+  color: #ffffff !important;
 }
 
 .nav-item.active {
