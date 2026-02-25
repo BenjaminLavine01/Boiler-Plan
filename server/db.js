@@ -14,10 +14,10 @@ if (!connectionString) {
 }
 
 // Create PostgreSQL connection pool
-// For Railway/cloud databases, SSL is required
+// For Neon, SSL is required in ALL environments
 const pool = new Pool({
   connectionString: connectionString,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  ssl: { rejectUnauthorized: false },
   // Connection pool settings for serverless (Vercel)
   max: 2, // Limit connections for serverless
   idleTimeoutMillis: 30000,
